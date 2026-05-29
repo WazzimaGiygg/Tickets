@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacidade e Termos - wazzimagiygg Help Desk</title>
+    <meta name="description" content="Política de Privacidade, LGPD, Marco Civil da Internet, Termos de Uso e informações sobre GitHub Pages e Firebase">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 .material-icons {
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .header p {
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        .last-update {
+            background: #e8f0fe;
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        /* Navegação */
+        .nav-links {
+            background: white;
+            border-radius: 16px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 8px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #e8f0fe;
+            color: #667eea;
+        }
+
+        /* Cards de Conteúdo */
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .content-card h2 {
+            color: #2d3748;
+            font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .content-card h3 {
+            color: #4a5568;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+        }
+
+        .content-card p {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .content-card ul, .content-card ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .content-card li {
+            color: #4a5568;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .info-box {
+            background: #e8f0fe;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        /* Grid de Serviços */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .service-card {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .service-icon .material-icons {
+            font-size: 30px;
+            color: white;
+        }
+
+        .service-card h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            font-size: 13px;
+            color: #718096;
+        }
+
+        /* Tabela de Direitos */
+        .rights-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .rights-table th, .rights-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .rights-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .rights-table td {
+            color: #4a5568;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botões */
+        .btn-back {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background: #cbd5e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-card {
+                padding: 20px;
+            }
+            .rights-table {
+                font-size: 12px;
+            }
+            .rights-table th, .rights-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="material-icons">privacy_tip</span>
+                Política de Privacidade e Termos de Uso
+            </h1>
+            <p>Transparência, segurança e conformidade legal - wazzimagiygg Help Desk</p>
+            <div class="last-update">
+                <span class="material-icons" style="font-size: 16px; vertical-align: middle;">update</span>
+                Última atualização: 29 de maio de 2026
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <a href="#lgpd" class="nav-link">🔒 LGPD</a>
+            <a href="#marco-civil" class="nav-link">⚖️ Marco Civil</a>
+            <a href="#firebase" class="nav-link">🔥 Firebase</a>
+            <a href="#github" class="nav-link">🐙 GitHub Pages</a>
+            <a href="#direitos" class="nav-link">📋 Seus Direitos</a>
+            <a href="#termos" class="nav-link">📜 Termos de Uso</a>
+            <a href="#contato" class="nav-link">📞 Contato</a>
+        </div>
+
+        <a href="/" class="btn-back">
+            <span class="material-icons">arrow_back</span> Voltar ao Help Desk
+        </a>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO LGPD -->
+        <!-- ============================================ -->
+        <div id="lgpd" class="content-card">
+            <h2>
+                <span class="material-icons">gavel</span>
+                Lei Geral de Proteção de Dados (LGPD - Lei 13.709/2018)
+            </h2>
+            
+            <p>A wazzimagiygg está em <strong>100% conformidade</strong> com a Lei Geral de Proteção de Dados, garantindo a segurança e privacidade dos seus dados.</p>
+
+            <div class="highlight-box">
+                <h3>📊 Quais dados coletamos?</h3>
+                <ul>
+                    <li><strong>Nome e e-mail</strong> - Fornecidos via autenticação do Google</li>
+                    <li><strong>UID (Identificador único)</strong> - Para identificação segura</li>
+                    <li><strong>Conteúdo dos tickets</strong> - Mensagens, descrições e anexos</li>
+                    <li><strong>Histórico de interações</strong> - Data, tipo e status das solicitações</li>
+                    <li><strong>Endereço de IP</strong> - Para logs de segurança e auditoria</li>
+                    <li><strong>Dados de navegação</strong> - User agent, página de origem</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Finalidades do Tratamento (Art. 7º)</h3>
+                <ul>
+                    <li><strong>Execução de contrato (Art. 7º, V)</strong> - Prestação dos serviços de suporte</li>
+                    <li><strong>Consentimento (Art. 7º, I)</strong> - Aceite explícito dos termos</li>
+                    <li><strong>Interesse legítimo (Art. 7º, IX)</strong> - Melhoria dos serviços e segurança</li>
+                    <li><strong>Cumprimento de obrigação legal (Art. 7º, II)</strong> - Manutenção de registros conforme lei</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h3>✅ Seus Direitos Garantidos (Arts. 18-22)</h3>
+                <ul>
+                    <li><strong>Confirmação de tratamento</strong> - Saber se seus dados são processados</li>
+                    <li><strong>Acesso aos dados</strong> - Visualizar todas as informações armazenadas</li>
+                    <li><strong>Correção de dados</strong> - Retificar informações incompletas ou erradas</li>
+                    <li><strong>Portabilidade</strong> - Exportar seus dados em formato estruturado</li>
+                    <li><strong>Eliminação (Direito ao esquecimento)</strong> - Solicitar exclusão permanente</li>
+                    <li><strong>Revogação de consentimento</strong> - Retirar autorização a qualquer momento</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📅 Prazo de Retenção</h3>
+                <p>Seus dados serão mantidos enquanto sua conta estiver ativa. Após solicitação de exclusão, os dados serão anonimizados em até <strong>30 dias</strong>, conforme Art. 19 da LGPD. Registros de auditoria podem ser mantidos por até 6 meses para fins legais.</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO MARCO CIVIL DA INTERNET -->
+        <!-- ============================================ -->
+        <div id="marco-civil" class="content-card">
+            <h2>
+                <span class="material-icons">account_balance</span>
+                Marco Civil da Internet (Lei 12.965/2014)
+            </h2>
+
+            <p>A plataforma respeita integralmente os princípios e garantias estabelecidos pelo Marco Civil da Internet, a "Constituição da Internet" brasileira.</p>
+
+            <div class="highlight-box">
+                <h3>📜 Princípios Fundamentais (Art. 2º e 3º)</h3>
+                <ul>
+                    <li><strong>Liberdade de expressão</strong> - Respeito à manifestação do pensamento</li>
+                    <li><strong>Proteção à privacidade</strong> - Dados pessoais tratados com sigilo</li>
+                    <li><strong>Neutralidade de rede</strong> - Tratamento isonômico dos pacotes de dados</li>
+                    <li><strong>Estabilidade e segurança</strong> - Infraestrutura robusta e protegida</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🔐 Direitos dos Usuários (Art. 7º)</h3>
+                <ul>
+                    <li><strong>Inviolabilidade da privacidade</strong> - Comunicações protegidas</li>
+                    <li><strong>Integridade dos dados</strong> - Dados armazenados com segurança</li>
+                    <li><strong>Informação clara</strong> - Termos de uso transparentes</li>
+                    <li><strong>Não suspensão arbitrária</strong> - Apenas por justa causa</li>
+                    <li><strong>Responsabilidade</strong> - Canal claro para notificações</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Guarda de Registros (Art. 10 e 15)</h3>
+                <p>Mantemos registros de acesso e logs de atividades pelo período mínimo exigido por lei, garantindo rastreabilidade e segurança. Os dados são armazenados em servidores seguros com criptografia.</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO FIREBASE -->
+        <!-- ============================================ -->
+        <div id="firebase" class="content-card">
+            <h2>
+                <span class="material-icons">fireplace</span>
+                Firebase - Infraestrutura e Armazenamento
+            </h2>
+
+            <p>A wazzimagiygg utiliza o <strong>Firebase</strong> (Google) como plataforma de backend, garantindo segurança e escalabilidade.</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">cloud</span></div>
+                    <h4>Firestore Database</h4>
+                    <p>Armazenamento seguro e criptografado de todos os dados</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">lock</span></div>
+                    <h4>Authentication</h4>
+                    <p>Login seguro via Google OAuth 2.0</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">security</span></div>
+                    <h4>Security Rules</h4>
+                    <p>Regras de segurança granulares por usuário</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🔒 Medidas de Segurança do Firebase</h3>
+                <ul>
+                    <li>Criptografia em trânsito (TLS/SSL)</li>
+                    <li>Criptografia em repouso (AES-256)</li>
+                    <li>Autenticação multifator para administradores</li>
+                    <li>Logs de auditoria completos</li>
+                    <li>Backups automáticos e redundância</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Compartilhamento de Dados com Google</h3>
+                <p>Seus dados são armazenados na infraestrutura do Google, que segue rigorosos padrões de segurança e privacidade. Para mais informações, consulte:</p>
+                <ul style="margin-top: 10px;">
+                    <li><a href="https://policies.google.com/privacy" target="_blank">Política de Privacidade do Google</a></li>
+                    <li><a href="https://firebase.google.com/support/privacy" target="_blank">Privacidade do Firebase</a></li>
+                    <li><a href="https://cloud.google.com/security" target="_blank">Segurança do Google Cloud</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO GITHUB PAGES -->
+        <!-- ============================================ -->
+        <div id="github" class="content-card">
+            <h2>
+                <span class="material-icons">code</span>
+                GitHub Pages - Hospedagem
+            </h2>
+
+            <p>O frontend da plataforma é hospedado no <strong>GitHub Pages</strong>, garantindo alta disponibilidade e desempenho.</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">public</span></div>
+                    <h4>CDN Global</h4>
+                    <p>Distribuição de conteúdo acelerada mundialmente</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">https</span></div>
+                    <h4>HTTPS Padrão</h4>
+                    <p>Conexão criptografada em toda a plataforma</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">backup</span></div>
+                    <h4>Versionamento</h4>
+                    <p>Histórico completo via Git</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Sobre o GitHub Pages</h3>
+                <p>O GitHub Pages é um serviço de hospedagem estática que não coleta dados pessoais além dos necessários para operação. Para mais informações:</p>
+                <ul style="margin-top: 10px;">
+                    <li><a href="https://docs.github.com/pt/site-policy/privacy-policies/github-privacy-statement" target="_blank">Política de Privacidade do GitHub</a></li>
+                    <li><a href="https://docs.github.com/pages" target="_blank">Documentação do GitHub Pages</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO DIREITOS DO USUÁRIO -->
+        <!-- ============================================ -->
+        <div id="direitos" class="content-card">
+            <h2>
+                <span class="material-icons">assignment_ind</span>
+                Seus Direitos - Como Exercê-los
+            </h2>
+
+            <p>Você pode exercer todos os seus direitos garantidos por lei através dos seguintes canais:</p>
+
+            <table class="rights-table">
+                <thead>
+                    <tr>
+                        <th>Direito</th>
+                        <th>Como exercer</th>
+                        <th>Prazo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🔍 Acessar dados</td>
+                        <td>Área "Meus Dados" no menu</td>
+                        <td>Imediato</td>
+                    </tr>
+                    <tr>
+                        <td>📥 Portabilidade</td>
+                        <td>Botão "Exportar Dados"</td>
+                        <td>Imediato</td>
+                    </tr>
+                    <tr>
+                        <td>🗑️ Exclusão (Esquecimento)</td>
+                        <td>Solicitar via ticket ou "Solicitar Exclusão"</td>
+                        <td>Até 30 dias</td>
+                    </tr>
+                    <tr>
+                        <td>✏️ Correção</td>
+                        <td>Contatar o DPO via e-mail</td>
+                        <td>Até 15 dias</td>
+                    </tr>
+                    <tr>
+                        <td>🔄 Revogar consentimento</td>
+                        <td>Botão "Revogar Consentimento"</td>
+                        <td>Imediato</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <h3>📞 Encarregado de Proteção de Dados (DPO)</h3>
+                <p><strong>Nome:</strong> Encarregado wazzimagiygg<br>
+                <strong>E-mail:</strong> <a href="mailto:wazzimagiygg@gmail.com">wazzimagiygg@gmail.com</a><br>
+                <strong>Assuntos:</strong> LGPD, privacidade, direitos do titular, solicitações de dados</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO TERMOS DE USO -->
+        <!-- ============================================ -->
+        <div id="termos" class="content-card">
+            <h2>
+                <span class="material-icons">description</span>
+                Termos de Uso
+            </h2>
+
+            <div class="warning-box">
+                <h3>⚠️ Condições de Uso</h3>
+                <ul>
+                    <li><strong>Uso adequado:</strong> A plataforma deve ser usada para fins legítimos de suporte</li>
+                    <li><strong>Conduta proibida:</strong> Não é permitido conteúdo ofensivo, ilegal ou difamatório</li>
+                    <li><strong>Limite de tickets:</strong> 1 ticket por dia por usuário</li>
+                    <li><strong>Resposta esperada:</strong> Prazo de até 48 horas úteis para primeiro contato</li>
+                    <li><strong>Encerramento de conta:</strong> Reservamo-nos o direito de suspender contas que violem os termos</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h3>📋 Responsabilidades</h3>
+                <ul>
+                    <li><strong>Do usuário:</strong> Fornecer informações verdadeiras e precisas</li>
+                    <li><strong>Da plataforma:</strong> Manter sigilo e segurança dos dados</li>
+                    <li><strong>De terceiros:</strong> Não nos responsabilizamos por links externos</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>🔄 Atualizações dos Termos</h3>
+                <p>Esta política pode ser atualizada periodicamente. Recomendamos revisar esta página regularmente. Em caso de alterações significativas, os usuários serão notificados via e-mail ou através da plataforma.</p>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SEÇÃO CONTATO -->
+        <!-- ============================================ -->
+        <div id="contato" class="content-card">
+            <h2>
+                <span class="material-icons">contact_support</span>
+                Fale Conosco
+            </h2>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">email</span></div>
+                    <h4>E-mail</h4>
+                    <p><a href="mailto:wazzimagiygg@gmail.com">wazzimagiygg@gmail.com</a></p>
+                    <p style="font-size: 11px;">Para questões gerais e LGPD</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">confirmation_number</span></div>
+                    <h4>Tickets</h4>
+                    <p><a href="/tickets">Abrir Ticket</a></p>
+                    <p style="font-size: 11px;">Para suporte técnico</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><span class="material-icons">security</span></div>
+                    <h4>DPO</h4>
+                    <p><a href="mailto:wazzimagiygg@gmail.com">wazzimagiygg@gmail.com</a></p>
+                    <p style="font-size: 11px;">Encarregado de Proteção de Dados</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>📋 Resumo das Plataformas Utilizadas</h3>
+                <ul>
+                    <li><strong>Autenticação:</strong> Google Firebase Auth</li>
+                    <li><strong>Banco de Dados:</strong> Google Firebase Firestore</li>
+                    <li><strong>Hospedagem:</strong> GitHub Pages</li>
+                    <li><strong>Domínio:</strong> wazzimagiygg.com</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>wazzimagiygg Help Desk - Suporte ao cliente</p>
+            <p>
+                <a href="/">Início</a> |
+                <a href="/tickets">Tickets</a> |
+                <a href="/privacidade">Privacidade (LGPD)</a> |
+                <a href="/termos">Termos de Uso</a>
+            </p>
+            <p>© 2026 wazzimagiygg - Em conformidade com a Lei 13.709/2018 (LGPD) e Lei 12.965/2014 (Marco Civil da Internet)</p>
+            <p style="margin-top: 10px; font-size: 11px;">Hospedado em GitHub Pages | Database em Firebase (Google Cloud)</p>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll para links âncora
+        document.querySelectorAll('.nav-link, .btn-back').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
