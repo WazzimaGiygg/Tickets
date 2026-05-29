@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Tickets - WikiZero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 .material-icons {
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .header p {
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        .user-info {
+            background: #f7fafc;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-icon .material-icons {
+            font-size: 28px;
+            color: white;
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .stat-info p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4a5568;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #edf2f7;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Botão Criar Ticket */
+        .create-ticket-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+
+        .create-ticket-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Lista de Tickets */
+        .tickets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ticket-card {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .ticket-card:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .ticket-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+
+        .ticket-id {
+            font-size: 12px;
+            color: #a0aec0;
+            font-family: monospace;
+        }
+
+        .ticket-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-open { background: #fed7d7; color: #c53030; }
+        .status-in-progress { background: #feebc8; color: #dd6b20; }
+        .status-waiting { background: #e9d8fd; color: #6b46c1; }
+        .status-resolved { background: #c6f6d5; color: #276749; }
+        .status-closed { background: #e2e8f0; color: #4a5568; }
+
+        .ticket-preview {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .ticket-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .ticket-meta .material-icons {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        /* Modal de Ticket */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 25px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            font-size: 28px;
+            color: #a0aec0;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #dc3545;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Mensagens do Ticket */
+        .messages-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+            background: #f7fafc;
+            padding: 12px 16px;
+            border-radius: 16px;
+        }
+
+        .message-user {
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .message-text {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #a0aec0;
+            margin-top: 5px;
+        }
+
+        .message-admin {
+            background: #e8f0fe;
+        }
+
+        /* Botões */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #a0aec0;
+        }
+
+        .empty-state .material-icons {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        /* Badge de prioridade */
+        .priority-high { background: #fed7d7; color: #c53030; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+        .priority-medium { background: #feebc8; color: #dd6b20; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+        .priority-low { background: #c6f6d5; color: #276749; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ticket-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="material-icons">confirmation_number</span>
+                Central de Solicitações
+            </h1>
+            <p>Solicite suporte, reporte problemas, faça sugestões ou tire dúvidas sobre os serviços da WikiZero</p>
+            <div class="user-info" id="user-info">
+                <div id="user-display">
+                    <span class="material-icons" style="vertical-align: middle;">account_circle</span>
+                    <span id="user-name">Carregando...</span>
+                </div>
+                <div id="auth-buttons">
+                    <button class="btn-secondary" id="login-btn" onclick="signIn()" style="display: none;">🔑 Login</button>
+                    <button class="btn-secondary" id="logout-btn" onclick="signOut()" style="display: none;">🚪 Sair</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid" id="stats-grid" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-icon"><span class="material-icons">pending_actions</span></div>
+                <div class="stat-info"><h3 id="stat-open">0</h3><p>Abertos</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><span class="material-icons">engineering</span></div>
+                <div class="stat-info"><h3 id="stat-progress">0</h3><p>Em Andamento</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><span class="material-icons">schedule</span></div>
+                <div class="stat-info"><h3 id="stat-waiting">0</h3><p>Aguardando</p></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><span class="material-icons">check_circle</span></div>
+                <div class="stat-info"><h3 id="stat-resolved">0</h3><p>Resolvidos</p></div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('my')"><span class="material-icons">inbox</span> Meus Tickets</button>
+            <button class="tab-btn" onclick="switchTab('all')" id="admin-tab" style="display: none;"><span class="material-icons">admin_panel_settings</span> Todos os Tickets</button>
+        </div>
+
+        <div class="main-content">
+            <div id="my-tickets-view">
+                <button class="create-ticket-btn" onclick="openCreateTicketModal()">
+                    <span class="material-icons">add_circle</span>
+                    Nova Solicitação
+                </button>
+                <div id="my-tickets-list" class="tickets-list">
+                    <div class="loading">📋 Carregando seus tickets...</div>
+                </div>
+            </div>
+
+            <div id="admin-tickets-view" style="display: none;">
+                <div id="admin-tickets-list" class="tickets-list">
+                    <div class="loading">📋 Carregando todos os tickets...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Criar/Editar Ticket -->
+    <div id="ticket-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Nova Solicitação</h2>
+                <span class="close-modal" onclick="closeTicketModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="ticket-form">
+                    <div class="form-group">
+                        <label>Título da Solicitação</label>
+                        <input type="text" id="ticket-title" required placeholder="Ex: Problemas ao editar página">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Solicitação</label>
+                        <select id="ticket-type" required>
+                            <option value="">Selecione...</option>
+                            <option value="suporte">🛠️ Suporte Técnico</option>
+                            <option value="bug">🐛 Reportar Bug</option>
+                            <option value="sugestao">💡 Sugestão de Melhoria</option>
+                            <option value="duvida">❓ Dúvida Geral</option>
+                            <option value="conteudo">📄 Problemas com Conteúdo</option>
+                            <option value="conta">👤 Problemas na Conta</option>
+                            <option value="lgpd">🔒 Solicitação LGPD</option>
+                            <option value="outro">📝 Outro Assunto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prioridade</label>
+                        <select id="ticket-priority" required>
+                            <option value="low">🟢 Baixa - Sem urgência</option>
+                            <option value="medium">🟡 Média - Incômodo moderado</option>
+                            <option value="high">🔴 Alta - Impede uso do sistema</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição Detalhada</label>
+                        <textarea id="ticket-description" required placeholder="Descreva sua solicitação em detalhes. Quanto mais informações, mais rápido conseguimos ajudar!"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Anexar URL (opcional)</label>
+                        <input type="url" id="ticket-url" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">📤 Enviar Solicitação</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Visualizar Ticket -->
+    <div id="view-ticket-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="view-ticket-title">Ticket #000</h2>
+                <span class="close-modal" onclick="closeViewTicketModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="ticket-details"></div>
+                <div class="messages-container" id="messages-container"></div>
+                <div id="reply-form" style="display: none;">
+                    <div class="form-group">
+                        <label>Responder</label>
+                        <textarea id="reply-message" rows="3" placeholder="Digite sua resposta..."></textarea>
+                    </div>
+                    <div class="form-group" id="admin-actions" style="display: none;">
+                        <label>Alterar Status</label>
+                        <select id="ticket-status-admin">
+                            <option value="open">📋 Aberto</option>
+                            <option value="in-progress">🔧 Em Andamento</option>
+                            <option value="waiting">⏳ Aguardando</option>
+                            <option value="resolved">✅ Resolvido</option>
+                            <option value="closed">🔒 Fechado</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="sendReply()" style="width: 100%;">📨 Enviar Resposta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO DO FIREBASE
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
+            authDomain: "wzzm-ce3fc.firebaseapp.com",
+            projectId: "wzzm-ce3fc",
+            storageBucket: "wzzm-ce3fc.appspot.com",
+            messagingSenderId: "249427877153",
+            appId: "1:249427877153:web:0e4297294794a5aadeb260"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let currentUser = null;
+        let isAdmin = false;
+        let currentViewTicketId = null;
+        let currentTab = 'my';
+        let ticketsCache = [];
+
+        // UIDs de administradores
+        const ADMIN_UIDS = ['sZxfMuOBPbXdR8nttVPXIN8QOOl1', '6aPqWVh8JVYL5NqEb78iDGPD7dH3'];
+
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        
+        function formatDate(date) {
+            if (!date) return 'Data desconhecida';
+            if (date.toDate) date = date.toDate();
+            return date.toLocaleString('pt-BR');
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function showLoading(elementId, text = 'Carregando...') {
+            const element = document.getElementById(elementId);
+            if (element) element.innerHTML = `<div class="loading">📋 ${text}</div>`;
+        }
+
+        // Verificar se é admin
+        async function checkIsAdmin(user) {
+            if (!user) return false;
+            if (ADMIN_UIDS.includes(user.uid)) return true;
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                return userDoc.exists && userDoc.data().isAdmin === true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // ============================================
+        // FUNÇÕES DE TICKETS
+        // ============================================
+
+        // Criar novo ticket
+        async function createTicket(data) {
+            const ticketData = {
+                ...data,
+                userId: currentUser.uid,
+                userEmail: currentUser.email,
+                userName: currentUser.displayName || currentUser.email.split('@')[0],
+                status: 'open',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                messages: []
+            };
+
+            const docRef = await db.collection('tickets').add(ticketData);
+            
+            // Adicionar primeira mensagem na subcoleção
+            await db.collection('tickets').doc(docRef.id).collection('messages').add({
+                userId: currentUser.uid,
+                userName: currentUser.displayName || currentUser.email.split('@')[0],
+                userEmail: currentUser.email,
+                message: data.description,
+                isAdmin: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                type: 'initial'
+            });
+
+            return docRef.id;
+        }
+
+        // Carregar tickets do usuário
+        async function loadUserTickets() {
+            if (!currentUser) return;
+            
+            try {
+                const snapshot = await db.collection('tickets')
+                    .where('userId', '==', currentUser.uid)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const tickets = [];
+                snapshot.forEach(doc => {
+                    tickets.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayTickets(tickets, 'my-tickets-list');
+                updateStats(tickets);
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('my-tickets-list').innerHTML = `<div class="loading" style="color:#dc3545;">❌ Erro: ${error.message}</div>`;
+            }
+        }
+
+        // Carregar todos os tickets (admin)
+        async function loadAllTickets() {
+            if (!isAdmin) return;
+            
+            try {
+                const snapshot = await db.collection('tickets')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                const tickets = [];
+                snapshot.forEach(doc => {
+                    tickets.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayTickets(tickets, 'admin-tickets-list', true);
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('admin-tickets-list').innerHTML = `<div class="loading" style="color:#dc3545;">❌ Erro: ${error.message}</div>`;
+            }
+        }
+
+        // Exibir tickets
+        function displayTickets(tickets, containerId, isAdminView = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-icons">inbox</span>
+                        <h3>Nenhum ticket encontrado</h3>
+                        <p>Clique em "Nova Solicitação" para abrir um ticket.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = tickets.map(ticket => `
+                <div class="ticket-card" onclick="openViewTicketModal('${ticket.id}')">
+                    <div class="ticket-header">
+                        <div>
+                            <span class="ticket-title">${escapeHtml(ticket.title)}</span>
+                            <span class="ticket-id">#${ticket.id.substring(0, 8)}</span>
+                            <span class="priority-${ticket.priority || 'low'}">${getPriorityText(ticket.priority)}</span>
+                        </div>
+                        <div>
+                            <span class="ticket-status status-${ticket.status}">${getStatusText(ticket.status)}</span>
+                        </div>
+                    </div>
+                    <div class="ticket-preview">${escapeHtml(ticket.description?.substring(0, 100))}${ticket.description?.length > 100 ? '...' : ''}</div>
+                    <div class="ticket-meta">
+                        <span><span class="material-icons">schedule</span> ${formatDate(ticket.createdAt)}</span>
+                        <span><span class="material-icons">category</span> ${getTypeText(ticket.type)}</span>
+                        ${isAdminView ? `<span><span class="material-icons">person</span> ${escapeHtml(ticket.userName)}</span>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Carregar mensagens do ticket
+        async function loadTicketMessages(ticketId) {
+            try {
+                const snapshot = await db.collection('tickets').doc(ticketId)
+                    .collection('messages')
+                    .orderBy('createdAt', 'asc')
+                    .get();
+                
+                const messages = [];
+                snapshot.forEach(doc => {
+                    messages.push({ id: doc.id, ...doc.data() });
+                });
+                
+                displayMessages(messages);
+                return messages;
+            } catch (error) {
+                console.error('Erro ao carregar mensagens:', error);
+                return [];
+            }
+        }
+
+        // Exibir mensagens
+        function displayMessages(messages) {
+            const container = document.getElementById('messages-container');
+            if (!container) return;
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="loading">💬 Nenhuma mensagem ainda...</div>';
+                return;
+            }
+            
+            container.innerHTML = messages.map(msg => `
+                <div class="message">
+                    <div class="message-avatar">${msg.userName?.charAt(0) || 'U'}</div>
+                    <div class="message-content ${msg.isAdmin ? 'message-admin' : ''}">
+                        <div class="message-user">${escapeHtml(msg.userName)} ${msg.isAdmin ? '<span style="color:#667eea;"> (Admin)</span>' : ''}</div>
+                        <div class="message-text">${escapeHtml(msg.message)}</div>
+                        <div class="message-time">${formatDate(msg.createdAt)}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Scroll para o final
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Enviar resposta
+        async function sendReply() {
+            const message = document.getElementById('reply-message')?.value.trim();
+            if (!message) {
+                alert('Digite uma mensagem antes de enviar.');
+                return;
+            }
+            
+            const ticketId = currentViewTicketId;
+            const newStatus = document.getElementById('ticket-status-admin')?.value;
+            
+            try {
+                // Adicionar mensagem
+                await db.collection('tickets').doc(ticketId).collection('messages').add({
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    userEmail: currentUser.email,
+                    message: message,
+                    isAdmin: isAdmin,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                // Atualizar status se admin
+                if (isAdmin && newStatus) {
+                    await db.collection('tickets').doc(ticketId).update({
+                        status: newStatus,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } else {
+                    await db.collection('tickets').doc(ticketId).update({
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                }
+                
+                // Limpar campo
+                document.getElementById('reply-message').value = '';
+                
+                // Recarregar mensagens e tickets
+                await loadTicketMessages(ticketId);
+                await loadUserTickets();
+                if (isAdmin) await loadAllTickets();
+                
+                // Atualizar detalhes do ticket
+                await loadTicketDetails(ticketId);
+                
+            } catch (error) {
+                console.error('Erro ao enviar:', error);
+                alert('Erro ao enviar mensagem: ' + error.message);
+            }
+        }
+
+        // Carregar detalhes do ticket
+        async function loadTicketDetails(ticketId) {
+            try {
+                const doc = await db.collection('tickets').doc(ticketId).get();
+                if (doc.exists) {
+                    const ticket = { id: doc.id, ...doc.data() };
+                    const detailsDiv = document.getElementById('ticket-details');
+                    detailsDiv.innerHTML = `
+                        <div style="background: #f7fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                            <p><strong>📌 Título:</strong> ${escapeHtml(ticket.title)}</p>
+                            <p><strong>🏷️ Tipo:</strong> ${getTypeText(ticket.type)}</p>
+                            <p><strong>⚡ Prioridade:</strong> ${getPriorityText(ticket.priority)}</p>
+                            <p><strong>📅 Criado em:</strong> ${formatDate(ticket.createdAt)}</p>
+                            <p><strong>📊 Status:</strong> <span class="ticket-status status-${ticket.status}">${getStatusText(ticket.status)}</span></p>
+                            ${isAdmin ? `<p><strong>👤 Solicitante:</strong> ${escapeHtml(ticket.userName)} (${escapeHtml(ticket.userEmail)})</p>` : ''}
+                        </div>
+                    `;
+                    
+                    // Mostrar formulário de resposta
+                    document.getElementById('reply-form').style.display = 'block';
+                    if (isAdmin) {
+                        document.getElementById('admin-actions').style.display = 'block';
+                        document.getElementById('ticket-status-admin').value = ticket.status;
+                    } else {
+                        document.getElementById('admin-actions').style.display = 'none';
+                    }
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+        }
+
+        // Atualizar estatísticas
+        function updateStats(tickets) {
+            const open = tickets.filter(t => t.status === 'open').length;
+            const inProgress = tickets.filter(t => t.status === 'in-progress').length;
+            const waiting = tickets.filter(t => t.status === 'waiting').length;
+            const resolved = tickets.filter(t => t.status === 'resolved' || t.status === 'closed').length;
+            
+            document.getElementById('stat-open').textContent = open;
+            document.getElementById('stat-progress').textContent = inProgress;
+            document.getElementById('stat-waiting').textContent = waiting;
+            document.getElementById('stat-resolved').textContent = resolved;
+            document.getElementById('stats-grid').style.display = 'grid';
+        }
+
+        // ============================================
+        // FUNÇÕES DE UI
+        // ============================================
+
+        function getStatusText(status) {
+            const statusMap = {
+                'open': 'Aberto',
+                'in-progress': 'Em Andamento',
+                'waiting': 'Aguardando',
+                'resolved': 'Resolvido',
+                'closed': 'Fechado'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getTypeText(type) {
+            const typeMap = {
+                'suporte': '🛠️ Suporte Técnico',
+                'bug': '🐛 Reportar Bug',
+                'sugestao': '💡 Sugestão',
+                'duvida': '❓ Dúvida',
+                'conteudo': '📄 Conteúdo',
+                'conta': '👤 Conta',
+                'lgpd': '🔒 LGPD',
+                'outro': '📝 Outro'
+            };
+            return typeMap[type] || type;
+        }
+
+        function getPriorityText(priority) {
+            const priorityMap = {
+                'high': '🔴 Alta',
+                'medium': '🟡 Média',
+                'low': '🟢 Baixa'
+            };
+            return priorityMap[priority] || '🟢 Baixa';
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (tab === 'my') {
+                document.getElementById('my-tickets-view').style.display = 'block';
+                document.getElementById('admin-tickets-view').style.display = 'none';
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                loadUserTickets();
+            } else {
+                document.getElementById('my-tickets-view').style.display = 'none';
+                document.getElementById('admin-tickets-view').style.display = 'block';
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                loadAllTickets();
+            }
+        }
+
+        function openCreateTicketModal() {
+            if (!currentUser) {
+                alert('Faça login para abrir uma solicitação.');
+                signIn();
+                return;
+            }
+            document.getElementById('ticket-form').reset();
+            document.getElementById('modal-title').innerText = 'Nova Solicitação';
+            document.getElementById('ticket-modal').style.display = 'flex';
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticket-modal').style.display = 'none';
+        }
+
+        async function openViewTicketModal(ticketId) {
+            currentViewTicketId = ticketId;
+            document.getElementById('view-ticket-modal').style.display = 'flex';
+            document.getElementById('view-ticket-title').innerHTML = `Ticket #${ticketId.substring(0, 8)}`;
+            
+            await loadTicketDetails(ticketId);
+            await loadTicketMessages(ticketId);
+        }
+
+        function closeViewTicketModal() {
+            document.getElementById('view-ticket-modal').style.display = 'none';
+            currentViewTicketId = null;
+        }
+
+        // ============================================
+        // FORMULÁRIO DE CRIAÇÃO
+        // ============================================
+        
+        document.getElementById('ticket-form')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('ticket-title').value.trim();
+            const type = document.getElementById('ticket-type').value;
+            const priority = document.getElementById('ticket-priority').value;
+            const description = document.getElementById('ticket-description').value.trim();
+            const url = document.getElementById('ticket-url').value.trim();
+            
+            if (!title || !type || !description) {
+                alert('Preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Enviando...';
+            
+            try {
+                const ticketId = await createTicket({ title, type, priority, description, url });
+                alert(`✅ Solicitação criada com sucesso! Ticket #${ticketId.substring(0, 8)}`);
+                closeTicketModal();
+                await loadUserTickets();
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('❌ Erro ao criar solicitação: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Enviar Solicitação';
+            }
+        });
+
+        // ============================================
+        // AUTENTICAÇÃO
+        // ============================================
+        
+        function updateUI() {
+            const userName = currentUser ? (currentUser.displayName || currentUser.email.split('@')[0]) : 'Desconectado';
+            document.getElementById('user-name').innerHTML = `<strong>${escapeHtml(userName)}</strong>`;
+            
+            if (currentUser) {
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'inline-block';
+                document.getElementById('stats-grid').style.display = 'grid';
+                document.querySelector('.create-ticket-btn').style.display = 'inline-flex';
+                
+                if (isAdmin) {
+                    document.getElementById('admin-tab').style.display = 'inline-flex';
+                }
+            } else {
+                document.getElementById('login-btn').style.display = 'inline-block';
+                document.getElementById('logout-btn').style.display = 'none';
+                document.getElementById('stats-grid').style.display = 'none';
+                document.querySelector('.create-ticket-btn').style.display = 'none';
+                document.getElementById('admin-tab').style.display = 'none';
+                showLoading('my-tickets-list', '🔒 Faça login para ver seus tickets');
+            }
+        }
+
+        function signIn() {
+            auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        }
+
+        function signOut() {
+            auth.signOut().then(() => {
+                location.reload();
+            });
+        }
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        
+        auth.onAuthStateChanged(async (user) => {
+            currentUser = user;
+            if (user) {
+                isAdmin = await checkIsAdmin(user);
+                updateUI();
+                await loadUserTickets();
+                if (isAdmin && currentTab === 'all') {
+                    await loadAllTickets();
+                }
+            } else {
+                isAdmin = false;
+                updateUI();
+                document.getElementById('my-tickets-list').innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-icons">lock</span>
+                        <h3>Faça login para continuar</h3>
+                        <button class="btn-primary" onclick="signIn()" style="margin-top: 20px;">🔑 Entrar com Google</button>
+                    </div>
+                `;
+            }
+        });
+
+        // Fechar modais ao clicar fora
+        window.onclick = (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        };
+
+        // Expor funções globalmente
+        window.signIn = signIn;
+        window.signOut = signOut;
+        window.switchTab = switchTab;
+        window.openCreateTicketModal = openCreateTicketModal;
+        window.closeTicketModal = closeTicketModal;
+        window.openViewTicketModal = openViewTicketModal;
+        window.closeViewTicketModal = closeViewTicketModal;
+        window.sendReply = sendReply;
+    </script>
+</body>
+</html>
