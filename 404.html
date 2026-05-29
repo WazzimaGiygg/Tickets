@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada - Help Desk wazzimagiygg</title>
+    <meta name="description" content="A página que você procura não existe no sistema de suporte wazzimagiygg. Volte para o Help Desk ou abra um novo ticket.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .error-container {
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+        }
+
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .error-message {
+            color: #718096;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .helpdesk-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .quick-links {
+            margin: 30px 0 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .quick-links h4 {
+            color: #4a5568;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .link-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .link-btn {
+            background: #f7fafc;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-btn:hover {
+            background: #edf2f7;
+            color: #667eea;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 500px) {
+            .error-card {
+                padding: 30px 20px;
+            }
+            .error-code {
+                font-size: 80px;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .btn-primary, .btn-secondary {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-card">
+            <div class="helpdesk-logo">
+                <span class="material-icons">support_agent</span>
+                <span>wazzimagiygg Help Desk</span>
+            </div>
+            
+            <div class="error-icon">🔍</div>
+            <div class="error-code">404</div>
+            
+            <h1>Página não encontrada</h1>
+            <p class="error-message">
+                A página que você está procurando pode ter sido removida,<br>
+                renomeada ou está temporariamente indisponível no sistema de suporte.
+            </p>
+
+            <div class="action-buttons">
+                <a href="/" class="btn-primary">
+                    <span class="material-icons">home</span> Início
+                </a>
+                <a href="/tickets" class="btn-primary" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                    <span class="material-icons">confirmation_number</span> Meus Tickets
+                </a>
+                <a href="#" class="btn-secondary" onclick="goBack()">
+                    <span class="material-icons">arrow_back</span> Voltar
+                </a>
+            </div>
+
+            <div class="quick-links">
+                <h4>📋 Links Úteis</h4>
+                <div class="link-buttons">
+                    <a href="/new" class="link-btn">
+                        <span class="material-icons">add_circle</span> Abrir Ticket
+                    </a>
+                    <a href="/status" class="link-btn">
+                        <span class="material-icons">pending</span> Status
+                    </a>
+                    <a href="/faq" class="link-btn">
+                        <span class="material-icons">help</span> FAQ
+                    </a>
+                    <a href="/contato" class="link-btn">
+                        <span class="material-icons">email</span> Contato
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>wazzimagiygg Help Desk - Suporte ao cliente</p>
+            <p>
+                <a href="/">Início</a> |
+                <a href="/tickets">Tickets</a> |
+                <a href="/privacidade">Privacidade (LGPD)</a> |
+                <a href="/termos">Termos de Uso</a>
+            </p>
+            <p>© 2026 wazzimagiygg - Sistema de Suporte</p>
+        </div>
+    </div>
+
+    <script>
+        // Voltar para página anterior
+        function goBack() {
+            if (document.referrer && document.referrer !== '') {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+
+        // Registrar erro 404 no console (para analytics)
+        function log404Error() {
+            const url = window.location.pathname;
+            console.log(`📄 Help Desk - Página 404 acessada: ${url}`);
+            
+            // Opcional: enviar para analytics
+            if (typeof gtag === 'function') {
+                gtag('event', '404_error', {
+                    'page_path': url,
+                    'page_title': 'Help Desk 404',
+                    'service': 'support'
+                });
+            }
+        }
+
+        // Inicializar
+        log404Error();
+    </script>
+</body>
+</html>
