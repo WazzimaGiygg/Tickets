@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Tickets - Help Desk wazzimagiygg</title>
+    <meta name="description" content="Gerencie seus tickets de suporte - Acompanhe solicitações, veja respostas e abra novos chamados">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 .material-icons {
+            font-size: 32px;
+            color: #667eea;
+        }
+
+        .header p {
+            color: #718096;
+            margin-top: 8px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #f7fafc;
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-card p {
+            color: #718096;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Botões */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        /* Filtros */
+        .filters {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 5px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Lista de Tickets */
+        .tickets-list {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .ticket-card {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ticket-card:hover {
+            background: #f7fafc;
+            transform: translateX(5px);
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ticket-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        .ticket-id {
+            font-size: 11px;
+            color: #a0aec0;
+            font-family: monospace;
+        }
+
+        .ticket-preview {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 10px;
+        }
+
+        .ticket-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #a0aec0;
+        }
+
+        .ticket-meta .material-icons {
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        /* Status Badges */
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-open { background: #fed7d7; color: #c53030; }
+        .status-in-progress { background: #feebc8; color: #dd6b20; }
+        .status-waiting { background: #e9d8fd; color: #6b46c1; }
+        .status-resolved { background: #c6f6d5; color: #276749; }
+        .status-closed { background: #e2e8f0; color: #4a5568; }
+
+        .priority-high { color: #c53030; font-weight: 600; }
+        .priority-medium { color: #dd6b20; }
+        .priority-low { color: #276749; }
+
+        /* Warning Box */
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #a0aec0;
+        }
+
+        .empty-state .material-icons {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+        }
+
+        .modal-header h3 {
+            color: #2d3748;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            font-size: 28px;
+            color: #a0aec0;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #dc3545;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Mensagens */
+        .messages-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin: 20px 0;
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message-user-avatar {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .message-admin-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .message-content {
+            flex: 1;
+            background: #f7fafc;
+            padding: 12px 16px;
+            border-radius: 16px;
+        }
+
+        .message-admin-content {
+            background: #e8f0fe;
+        }
+
+        .message-name {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .message-text {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #a0aec0;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ticket-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1>
+                        <span class="material-icons">confirmation_number</span>
+                        Meus Tickets
+                    </h1>
+                    <p>Gerencie suas solicitações de suporte</p>
+                </div>
+                <div class="user-info" id="user-info">
+                    <div class="user-avatar" id="user-avatar">U</div>
+                    <span id="user-name">Carregando...</span>
+                    <button class="btn-secondary" onclick="signOut()">Sair</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-card" onclick="filterByStatus('open')">
+                <h3 id="stat-open">0</h3>
+                <p>📋 Em Aberto</p>
+            </div>
+            <div class="stat-card" onclick="filterByStatus('in-progress')">
+                <h3 id="stat-progress">0</h3>
+                <p>🔧 Em Andamento</p>
+            </div>
+            <div class="stat-card" onclick="filterByStatus('waiting')">
+                <h3 id="stat-waiting">0</h3>
+                <p>⏳ Aguardando</p>
+            </div>
+            <div class="stat-card" onclick="filterByStatus('resolved')">
+                <h3 id="stat-resolved">0</h3>
+                <p>✅ Resolvidos</p>
+            </div>
+        </div>
+
+        <button id="new-ticket-btn" class="btn-primary">
+            <span class="material-icons">add_circle</span>
+            Abrir Novo Ticket
+        </button>
+
+        <div class="warning-box" id="limit-warning" style="display: none;">
+            <span class="material-icons">info</span>
+            <span>⚠️ Você já abriu um ticket hoje. O limite é de 1 ticket por dia. Aguarde até amanhã para abrir um novo.</span>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>📊 Filtrar por Status</label>
+                <select id="filter-status" onchange="filterTickets()">
+                    <option value="all">Todos</option>
+                    <option value="open">Em Aberto</option>
+                    <option value="in-progress">Em Andamento</option>
+                    <option value="waiting">Aguardando</option>
+                    <option value="resolved">Resolvidos</option>
+                    <option value="closed">Fechados</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>🏷️ Filtrar por Tipo</label>
+                <select id="filter-type" onchange="filterTickets()">
+                    <option value="all">Todos</option>
+                    <option value="suporte">Suporte Técnico</option>
+                    <option value="bug">Reportar Bug</option>
+                    <option value="sugestao">Sugestão</option>
+                    <option value="duvida">Dúvida</option>
+                    <option value="conta">Problemas na Conta</option>
+                    <option value="lgpd">Solicitação LGPD</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="tickets-list" class="tickets-list">
+            <div class="loading">📋 Carregando seus tickets...</div>
+        </div>
+
+        <div class="footer">
+            <p>wazzimagiygg Help Desk - Suporte ao cliente</p>
+            <p>
+                <a href="/">Início</a> |
+                <a href="/tickets">Tickets</a> |
+                <a href="/privacidade">Privacidade (LGPD)</a> |
+                <a href="/termos">Termos de Uso</a>
+            </p>
+            <p>© 2026 wazzimagiygg - Sistema de Suporte</p>
+        </div>
+    </div>
+
+    <!-- Modal Criar Ticket -->
+    <div id="create-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📝 Abrir Novo Ticket</h3>
+                <span class="close-modal" onclick="closeModal('create-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="ticket-form">
+                    <div class="form-group">
+                        <label>Título da Solicitação *</label>
+                        <input type="text" id="ticket-title" required placeholder="Ex: Problemas ao acessar minha conta">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Solicitação *</label>
+                        <select id="ticket-type" required>
+                            <option value="">Selecione...</option>
+                            <option value="suporte">🛠️ Suporte Técnico</option>
+                            <option value="bug">🐛 Reportar Bug</option>
+                            <option value="sugestao">💡 Sugestão de Melhoria</option>
+                            <option value="duvida">❓ Dúvida Geral</option>
+                            <option value="conta">👤 Problemas na Conta</option>
+                            <option value="lgpd">🔒 Solicitação LGPD</option>
+                            <option value="outro">📝 Outro Assunto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prioridade *</label>
+                        <select id="ticket-priority" required>
+                            <option value="low">🟢 Baixa - Sem urgência</option>
+                            <option value="medium">🟡 Média - Incômodo moderado</option>
+                            <option value="high">🔴 Alta - Impede uso do sistema</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição Detalhada *</label>
+                        <textarea id="ticket-description" required placeholder="Descreva sua solicitação em detalhes. Quanto mais informações, mais rápido conseguimos ajudar!"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>URL Relacionada (opcional)</label>
+                        <input type="url" id="ticket-url" placeholder="https://...">
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">📤 Enviar Solicitação</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Visualizar Ticket -->
+    <div id="view-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="view-ticket-title">Ticket #000000</h3>
+                <span class="close-modal" onclick="closeModal('view-modal')">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="ticket-details"></div>
+                
+                <div id="closed-warning" class="warning-box" style="display: none;">
+                    <span class="material-icons">lock</span>
+                    <span>⚠️ Este ticket está fechado ou resolvido. Não é possível adicionar novas mensagens.</span>
+                </div>
+                
+                <h4>💬 Conversa</h4>
+                <div id="messages-container" class="messages-container">
+                    <div class="loading">Carregando mensagens...</div>
+                </div>
+                
+                <div id="reply-area">
+                    <div class="form-group">
+                        <textarea id="reply-message" rows="3" placeholder="Digite sua resposta aqui..."></textarea>
+                    </div>
+                    <button class="btn-primary" onclick="sendReply()" style="width: 100%;">📨 Enviar Resposta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO FIREBASE
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
+            authDomain: "wzzm-ce3fc.firebaseapp.com",
+            projectId: "wzzm-ce3fc",
+            storageBucket: "wzzm-ce3fc.appspot.com",
+            messagingSenderId: "249427877153",
+            appId: "1:249427877153:web:0e4297294794a5aadeb260"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ============================================
+        // VARIÁVEIS GLOBAIS
+        // ============================================
+        let currentUser = null;
+        let currentTicketId = null;
+        let allTickets = [];
+
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        
+        function formatDate(date) {
+            if (!date) return 'N/A';
+            if (date.toDate) date = date.toDate();
+            return date.toLocaleString('pt-BR');
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function getTypeText(type) {
+            const types = {
+                'suporte': '🛠️ Suporte',
+                'bug': '🐛 Bug',
+                'sugestao': '💡 Sugestão',
+                'duvida': '❓ Dúvida',
+                'conta': '👤 Conta',
+                'lgpd': '🔒 LGPD',
+                'outro': '📝 Outro'
+            };
+            return types[type] || type;
+        }
+
+        function getPriorityText(priority) {
+            const priorities = {
+                'low': '🟢 Baixa',
+                'medium': '🟡 Média',
+                'high': '🔴 Alta'
+            };
+            return priorities[priority] || priority;
+        }
+
+        function getStatusText(status) {
+            const statuses = {
+                'open': 'Aberto',
+                'in-progress': 'Em Andamento',
+                'waiting': 'Aguardando',
+                'resolved': 'Resolvido',
+                'closed': 'Fechado'
+            };
+            return statuses[status] || status;
+        }
+
+        function isTicketClosed(status) {
+            return status === 'resolved' || status === 'closed';
+        }
+
+        // ============================================
+        // LIMITE DE TICKET POR DIA
+        // ============================================
+        
+        async function canCreateTicket() {
+            if (!currentUser) return false;
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            try {
+                const snapshot = await db.collection('tickets')
+                    .where('userId', '==', currentUser.uid)
+                    .where('createdAt', '>=', today)
+                    .get();
+                
+                return snapshot.size === 0;
+            } catch (error) {
+                console.error('Erro ao verificar limite:', error);
+                return true;
+            }
+        }
+
+        // ============================================
+        // CARREGAR TICKETS
+        // ============================================
+        
+        async function loadTickets() {
+            if (!currentUser) return;
+            
+            const container = document.getElementById('tickets-list');
+            container.innerHTML = '<div class="loading">📋 Carregando seus tickets...</div>';
+            
+            try {
+                const snapshot = await db.collection('tickets')
+                    .where('userId', '==', currentUser.uid)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+                
+                allTickets = [];
+                snapshot.forEach(doc => {
+                    allTickets.push({ id: doc.id, ...doc.data() });
+                });
+                
+                updateStats();
+                filterTickets();
+                
+                // Verificar limite diário
+                const canCreate = await canCreateTicket();
+                const newBtn = document.getElementById('new-ticket-btn');
+                const limitWarning = document.getElementById('limit-warning');
+                
+                if (newBtn) {
+                    newBtn.disabled = !canCreate;
+                    newBtn.style.opacity = canCreate ? '1' : '0.5';
+                }
+                if (limitWarning) {
+                    limitWarning.style.display = canCreate ? 'none' : 'flex';
+                }
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                container.innerHTML = `<div class="empty-state">❌ Erro: ${error.message}</div>`;
+            }
+        }
+
+        function updateStats() {
+            const open = allTickets.filter(t => t.status === 'open').length;
+            const progress = allTickets.filter(t => t.status === 'in-progress').length;
+            const waiting = allTickets.filter(t => t.status === 'waiting').length;
+            const resolved = allTickets.filter(t => t.status === 'resolved' || t.status === 'closed').length;
+            
+            document.getElementById('stat-open').textContent = open;
+            document.getElementById('stat-progress').textContent = progress;
+            document.getElementById('stat-waiting').textContent = waiting;
+            document.getElementById('stat-resolved').textContent = resolved;
+        }
+
+        function filterTickets() {
+            const statusFilter = document.getElementById('filter-status').value;
+            const typeFilter = document.getElementById('filter-type').value;
+            
+            let filtered = [...allTickets];
+            
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(t => t.status === statusFilter);
+            }
+            if (typeFilter !== 'all') {
+                filtered = filtered.filter(t => t.type === typeFilter);
+            }
+            
+            displayTickets(filtered);
+        }
+
+        function filterByStatus(status) {
+            document.getElementById('filter-status').value = status;
+            filterTickets();
+        }
+
+        function displayTickets(tickets) {
+            const container = document.getElementById('tickets-list');
+            
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <span class="material-icons">inbox</span>
+                        <h3>Nenhum ticket encontrado</h3>
+                        <p>Clique em "Abrir Novo Ticket" para solicitar suporte.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = tickets.map(ticket => `
+                <div class="ticket-card" onclick="openTicket('${ticket.id}')">
+                    <div class="ticket-header">
+                        <div>
+                            <span class="ticket-title">${escapeHtml(ticket.title)}</span>
+                            <span class="ticket-id"> #${ticket.id.substring(0, 8)}</span>
+                        </div>
+                        <div>
+                            <span class="status status-${ticket.status}">${getStatusText(ticket.status)}</span>
+                        </div>
+                    </div>
+                    <div class="ticket-preview">${escapeHtml(ticket.description.substring(0, 100))}${ticket.description.length > 100 ? '...' : ''}</div>
+                    <div class="ticket-meta">
+                        <span><span class="material-icons">schedule</span> ${formatDate(ticket.createdAt)}</span>
+                        <span><span class="material-icons">category</span> ${getTypeText(ticket.type)}</span>
+                        <span class="priority-${ticket.priority}">⚡ ${getPriorityText(ticket.priority)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // CRIAR TICKET
+        // ============================================
+        
+        async function createTicket(event) {
+            event.preventDefault();
+            
+            const canCreate = await canCreateTicket();
+            if (!canCreate) {
+                alert('⚠️ Você já abriu um ticket hoje. Aguarde até amanhã para abrir outro.');
+                return;
+            }
+            
+            const title = document.getElementById('ticket-title').value.trim();
+            const type = document.getElementById('ticket-type').value;
+            const priority = document.getElementById('ticket-priority').value;
+            const description = document.getElementById('ticket-description').value.trim();
+            const url = document.getElementById('ticket-url').value.trim();
+            
+            if (!title || !type || !description) {
+                alert('Preencha todos os campos obrigatórios.');
+                return;
+            }
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Enviando...';
+            
+            try {
+                const ticketData = {
+                    title, type, priority, description,
+                    url: url || null,
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    status: 'open',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+                
+                const docRef = await db.collection('tickets').add(ticketData);
+                
+                await db.collection('tickets').doc(docRef.id).collection('messages').add({
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    userEmail: currentUser.email,
+                    message: description,
+                    isAdmin: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                alert(`✅ Ticket criado com sucesso! ID: #${docRef.id.substring(0, 8)}`);
+                closeModal('create-modal');
+                document.getElementById('ticket-form').reset();
+                await loadTickets();
+                
+            } catch (error) {
+                alert('❌ Erro: ' + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Enviar Solicitação';
+            }
+        }
+
+        // ============================================
+        // VISUALIZAR TICKET
+        // ============================================
+        
+        async function openTicket(ticketId) {
+            currentTicketId = ticketId;
+            
+            try {
+                const doc = await db.collection('tickets').doc(ticketId).get();
+                if (!doc.exists) return;
+                
+                const ticket = { id: doc.id, ...doc.data() };
+                const isClosed = isTicketClosed(ticket.status);
+                
+                document.getElementById('view-ticket-title').innerHTML = `Ticket #${ticket.id.substring(0, 8)} - ${escapeHtml(ticket.title)}`;
+                
+                document.getElementById('ticket-details').innerHTML = `
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+                            <div><strong>📅 Criado:</strong><br>${formatDate(ticket.createdAt)}</div>
+                            <div><strong>🏷️ Tipo:</strong><br>${getTypeText(ticket.type)}</div>
+                            <div><strong>⚡ Prioridade:</strong><br><span class="priority-${ticket.priority}">${getPriorityText(ticket.priority)}</span></div>
+                            <div><strong>📊 Status:</strong><br><span class="status status-${ticket.status}">${getStatusText(ticket.status)}</span></div>
+                        </div>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                            <strong>📝 Descrição:</strong><br>
+                            <p style="margin-top: 5px;">${escapeHtml(ticket.description)}</p>
+                            ${ticket.url ? `<p style="margin-top: 10px;"><strong>🔗 URL:</strong> <a href="${ticket.url}" target="_blank">${ticket.url}</a></p>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                const closedWarning = document.getElementById('closed-warning');
+                const replyArea = document.getElementById('reply-area');
+                
+                if (isClosed) {
+                    closedWarning.style.display = 'flex';
+                    replyArea.style.display = 'none';
+                } else {
+                    closedWarning.style.display = 'none';
+                    replyArea.style.display = 'block';
+                }
+                
+                await loadMessages(ticketId);
+                openModal('view-modal');
+                
+            } catch (error) {
+                alert('Erro: ' + error.message);
+            }
+        }
+
+        async function loadMessages(ticketId) {
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '<div class="loading">💬 Carregando mensagens...</div>';
+            
+            try {
+                const snapshot = await db.collection('tickets').doc(ticketId)
+                    .collection('messages')
+                    .orderBy('createdAt', 'asc')
+                    .get();
+                
+                const messages = [];
+                snapshot.forEach(doc => messages.push(doc.data()));
+                
+                if (messages.length === 0) {
+                    container.innerHTML = '<div class="empty-state">💬 Nenhuma mensagem ainda</div>';
+                    return;
+                }
+                
+                container.innerHTML = messages.map(msg => `
+                    <div class="message">
+                        <div class="message-avatar ${msg.isAdmin ? 'message-admin-avatar' : 'message-user-avatar'}">
+                            ${msg.userName?.charAt(0) || 'U'}
+                        </div>
+                        <div class="message-content ${msg.isAdmin ? 'message-admin-content' : ''}">
+                            <div class="message-name">
+                                ${escapeHtml(msg.userName)} ${msg.isAdmin ? '<span style="color:#667eea;"> (Administrador)</span>' : ''}
+                            </div>
+                            <div class="message-text">${escapeHtml(msg.message)}</div>
+                            <div class="message-time">${formatDate(msg.createdAt)}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.scrollTop = container.scrollHeight;
+                
+            } catch (error) {
+                container.innerHTML = `<div class="empty-state">❌ ${error.message}</div>`;
+            }
+        }
+
+        // ============================================
+        // ENVIAR RESPOSTA
+        // ============================================
+        
+        async function sendReply() {
+            const message = document.getElementById('reply-message').value.trim();
+            if (!message) {
+                alert('Digite uma mensagem antes de enviar.');
+                return;
+            }
+            
+            // Verificar se o ticket ainda está aberto
+            const doc = await db.collection('tickets').doc(currentTicketId).get();
+            if (doc.exists && isTicketClosed(doc.data().status)) {
+                alert('⚠️ Este ticket está fechado. Não é possível enviar novas mensagens.');
+                return;
+            }
+            
+            try {
+                await db.collection('tickets').doc(currentTicketId).collection('messages').add({
+                    userId: currentUser.uid,
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    userEmail: currentUser.email,
+                    message: message,
+                    isAdmin: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                await db.collection('tickets').doc(currentTicketId).update({
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                document.getElementById('reply-message').value = '';
+                await loadMessages(currentTicketId);
+                alert('✅ Mensagem enviada com sucesso!');
+                
+            } catch (error) {
+                alert('❌ Erro: ' + error.message);
+            }
+        }
+
+        // ============================================
+        // UI HELPERS
+        // ============================================
+        
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // ============================================
+        // AUTENTICAÇÃO
+        // ============================================
+        
+        function updateUserUI() {
+            if (currentUser) {
+                const name = currentUser.displayName || currentUser.email.split('@')[0];
+                document.getElementById('user-name').innerHTML = `${escapeHtml(name)}`;
+                document.getElementById('user-avatar').innerHTML = name.charAt(0).toUpperCase();
+            }
+        }
+
+        function signOut() {
+            auth.signOut().then(() => {
+                window.location.href = '/';
+            });
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        
+        document.getElementById('ticket-form')?.addEventListener('submit', createTicket);
+        document.getElementById('new-ticket-btn')?.addEventListener('click', () => openModal('create-modal'));
+        document.getElementById('filter-status')?.addEventListener('change', filterTickets);
+        document.getElementById('filter-type')?.addEventListener('change', filterTickets);
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        
+        auth.onAuthStateChanged(async (user) => {
+            currentUser = user;
+            if (user) {
+                updateUserUI();
+                await loadTickets();
+            } else {
+                window.location.href = '/';
+            }
+        });
+
+        // Expor funções globalmente
+        window.openTicket = openTicket;
+        window.sendReply = sendReply;
+        window.closeModal = closeModal;
+        window.filterTickets = filterTickets;
+        window.filterByStatus = filterByStatus;
+        window.signOut = signOut;
+    </script>
+</body>
+</html>
