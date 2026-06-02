@@ -637,17 +637,24 @@
         function renderApp() {
             const app = document.getElementById('app');
             app.innerHTML = `
-                <div class="header">
-                    <h1>
-                        <span class="material-icons">support_agent</span>
-                        Help Desk wazzimagiygg
-                    </h1>
-                    <p>Sistema de suporte - Abra um ticket e acompanhe suas solicitações</p>
-                    <div style="margin-top: 15px;">
-                        <span id="user-email"></span>
-                        <button id="logout-btn" class="btn-primary" style="margin-left: 10px; padding: 8px 16px;">Sair</button>
-                    </div>
-                </div>
+<div class="header">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+        <img src="https://support.wazzimagiygg.com/Favicom.png" 
+             alt="Logo Help Desk WazzimaGiygg" 
+             style="height: 60px; width: auto; border-radius: 12px;">
+        <div>
+            <h1>
+                <span class="material-icons">support_agent</span>
+                Help Desk wazzimagiygg
+            </h1>
+            <p>Sistema de suporte - Abra um ticket e acompanhe suas solicitações</p>
+        </div>
+    </div>
+    <div style="margin-top: 15px;">
+        <span id="user-email"></span>
+        <button id="logout-btn" class="btn-primary" style="margin-left: 10px; padding: 8px 16px;">Sair</button>
+    </div>
+</div>
 
                 <div class="stats-grid">
                     <div class="stat-card"><h3 id="stat-open">0</h3><p>Em Aberto</p></div>
