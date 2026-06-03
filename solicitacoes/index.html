@@ -17,24 +17,14 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 40px 20px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
+        .container { max-width: 1200px; margin: 0 auto; }
         .header {
             background: white;
             border-radius: 20px;
@@ -47,403 +37,77 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-
-        .header h1 {
-            color: #2d3748;
-            font-size: 1.8em;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
+        .header h1 { color: #2d3748; font-size: 1.8em; display: flex; align-items: center; gap: 12px; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 20px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 20px;
         }
-
-        .user-details {
-            text-align: right;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .user-email {
-            font-size: 12px;
-            color: #718096;
-        }
-
-        .btn-logout {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-logout:hover {
-            background: #c53030;
-            transform: translateY(-1px);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .stat-number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #718096;
-            margin-top: 5px;
-        }
-
-        .form-card {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .form-title {
-            font-size: 1.3em;
-            color: #2d3748;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .warning-box {
-            background: #fff5f5;
-            border-left: 4px solid #e53e3e;
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .warning-box .material-icons {
-            float: left;
-            margin-right: 12px;
-            color: #e53e3e;
-        }
-
-        .warning-box p {
-            margin-left: 28px;
-            color: #c53030;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #2d3748;
-        }
-
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin: 20px 0;
-        }
-
-        .checkbox-group input {
-            width: 20px;
-            height: 20px;
-            margin-top: 2px;
-        }
-
-        .checkbox-group label {
-            font-size: 14px;
-            color: #4a5568;
-        }
-
+        .user-details { text-align: right; }
+        .user-name { font-weight: 600; color: #2d3748; }
+        .user-email { font-size: 12px; color: #718096; }
+        .btn-logout { background: #e53e3e; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; border-radius: 16px; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .stat-number { font-size: 32px; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 12px; color: #718096; margin-top: 5px; }
+        .form-card { background: white; border-radius: 24px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .form-title { font-size: 1.3em; color: #2d3748; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0; }
+        .warning-box { background: #fff5f5; border-left: 4px solid #e53e3e; padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; overflow: hidden; }
+        .warning-box .material-icons { float: left; margin-right: 12px; color: #e53e3e; }
+        .warning-box p { margin-left: 28px; color: #c53030; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #2d3748; }
+        .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 14px; }
+        .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #667eea; }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .checkbox-group { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0; }
+        .checkbox-group input { width: 20px; height: 20px; margin-top: 2px; }
         .btn-submit {
-            width: 100%;
-            background: linear-gradient(135deg, #e53e3e, #c53030);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            width: 100%; background: linear-gradient(135deg, #e53e3e, #c53030); color: white;
+            border: none; padding: 14px 24px; border-radius: 12px; font-size: 16px;
+            font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-
-        .btn-submit:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(229, 62, 62, 0.3);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .requests-section {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        .section-title {
-            font-size: 1.3em;
-            color: #2d3748;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .requests-table {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 12px;
-            background: #f7fafc;
-            color: #4a5568;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
+        .btn-submit:hover:not(:disabled) { transform: translateY(-2px); }
+        .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+        .requests-section { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .section-title { font-size: 1.3em; color: #2d3748; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .requests-table { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px; background: #f7fafc; color: #4a5568; font-weight: 600; font-size: 13px; }
+        td { padding: 12px; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; }
         .status-pending { background: #fef3c7; color: #d97706; }
         .status-processing { background: #dbeafe; color: #2563eb; }
         .status-completed { background: #d1fae5; color: #059669; }
         .status-rejected { background: #fee2e2; color: #dc2626; }
-
-        .protocol-code {
-            font-family: monospace;
-            font-size: 11px;
-            color: #718096;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #a0aec0;
-        }
-
+        .protocol-code { font-family: monospace; font-size: 11px; color: #718096; }
+        .empty-state { text-align: center; padding: 40px; color: #a0aec0; }
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center;
         }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            max-width: 500px;
-            width: 90%;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .modal-content .material-icons {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
+        .modal-content { background: white; border-radius: 20px; max-width: 500px; width: 90%; padding: 30px; text-align: center; }
+        .modal-content .material-icons { font-size: 64px; margin-bottom: 20px; }
         .modal-content .success-icon { color: #48bb78; }
-        .modal-content .error-icon { color: #e53e3e; }
-
         .modal-content h3 { margin-bottom: 15px; color: #2d3748; }
         .modal-content p { color: #718096; margin-bottom: 20px; }
-
-        .modal-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid white;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 14px;
-            z-index: 1100;
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-            to { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-
-        .login-container {
-            max-width: 500px;
-            margin: 100px auto;
-            background: white;
-            border-radius: 24px;
-            padding: 50px 40px;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-
-        .login-container h2 {
-            color: #2d3748;
-            margin-bottom: 20px;
-        }
-
-        .login-container p {
-            color: #718096;
-            margin-bottom: 30px;
-        }
-
-        .btn-google {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 14px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .modal-btn { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 10px 24px; border-radius: 50px; cursor: pointer; }
+        .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid white; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 12px 24px; border-radius: 50px; font-size: 14px; z-index: 1100; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateX(-50%) translateY(100px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
+        .login-container { max-width: 500px; margin: 100px auto; background: white; border-radius: 24px; padding: 50px 40px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .login-container h2 { color: #2d3748; margin-bottom: 20px; }
+        .login-container p { color: #718096; margin-bottom: 30px; }
+        .btn-google { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 14px 30px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 12px; }
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .user-info {
-                flex-direction: column;
-            }
-            .user-details {
-                text-align: center;
-            }
-            th, td {
-                font-size: 11px;
-                padding: 8px 4px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .header { flex-direction: column; text-align: center; }
+            .user-info { flex-direction: column; }
+            .user-details { text-align: center; }
+            th, td { font-size: 11px; padding: 8px 4px; }
         }
     </style>
 </head>
@@ -451,10 +115,7 @@
     <div id="app"></div>
 
     <script>
-        // ============================================
-        // CONFIGURAÇÃO DO FIREBASE
-        // ============================================
-        
+        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
             authDomain: "wzzm-ce3fc.firebaseapp.com",
@@ -464,12 +125,10 @@
             appId: "1:249427877153:web:0e4297294794a5aadeb260"
         };
 
-        // Inicializar Firebase
         if (typeof firebase !== 'undefined' && !firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
         
-        const db = firebase.firestore();
         const auth = firebase.auth();
         const googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -480,24 +139,35 @@
             TEMPLATE_ID: 'template_svo2mrf'
         };
         
-        // Inicializar EmailJS se disponível
         if (typeof emailjs !== 'undefined') {
             emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
         }
 
-        // ============================================
-        // VARIÁVEIS GLOBAIS
-        // ============================================
-        
         let currentUser = null;
         let userRequests = [];
 
-        // ============================================
-        // FUNÇÕES AUXILIARES
-        // ============================================
-        
+        // Carregar solicitações do localStorage
+        function loadRequestsFromLocal() {
+            var saved = localStorage.getItem('wzzm_deletion_requests_' + (currentUser ? currentUser.uid : ''));
+            if (saved) {
+                try {
+                    userRequests = JSON.parse(saved);
+                } catch(e) { userRequests = []; }
+            } else {
+                userRequests = [];
+            }
+            updateStats();
+            displayRequests();
+        }
+
+        function saveRequestsToLocal() {
+            if (currentUser) {
+                localStorage.setItem('wzzm_deletion_requests_' + currentUser.uid, JSON.stringify(userRequests));
+            }
+        }
+
         function showToast(message, isError) {
-            const toast = document.createElement('div');
+            var toast = document.createElement('div');
             toast.className = 'toast';
             toast.style.background = isError ? '#e53e3e' : '#48bb78';
             toast.textContent = message;
@@ -507,8 +177,8 @@
 
         function formatDate(date) {
             if (!date) return 'N/A';
-            if (date.toDate) date = date.toDate();
-            return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR');
+            var d = new Date(date);
+            return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR');
         }
 
         function getStatusBadge(status) {
@@ -538,57 +208,8 @@
             return div.innerHTML;
         }
 
-        // ============================================
-        // CARREGAR SOLICITAÇÕES DO USUÁRIO
-        // ============================================
-        
-        async function loadUserRequests() {
-            if (!currentUser) return;
-            
-            var tbody = document.getElementById('requests-tbody');
-            if (tbody) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">📋 Carregando suas solicitações...</td></tr>';
-            }
-            
-            try {
-                var snapshot = await db.collection('deletion_requests')
-                    .where('userId', '==', currentUser.uid)
-                    .orderBy('requestDate', 'desc')
-                    .get();
-                
-                userRequests = [];
-                snapshot.forEach(function(doc) {
-                    var data = doc.data();
-                    var requestDate = data.requestDate;
-                    if (requestDate && requestDate.toDate) {
-                        requestDate = requestDate.toDate();
-                    } else if (!requestDate) {
-                        requestDate = new Date();
-                    }
-                    userRequests.push({
-                        id: doc.id,
-                        protocol: data.protocol,
-                        status: data.status,
-                        reason: data.reason,
-                        requestDate: requestDate,
-                        completedAt: data.completedAt
-                    });
-                });
-                
-                updateStats();
-                displayRequests();
-                
-            } catch (error) {
-                console.error('Erro ao carregar solicitações:', error);
-                if (tbody) {
-                    tbody.innerHTML = '<tr><td colspan="5" class="empty-state">❌ Erro ao carregar: ' + error.message + '</td></tr>';
-                }
-            }
-        }
-
         function updateStats() {
             var pending = 0, processing = 0, completed = 0, rejected = 0;
-            
             for (var i = 0; i < userRequests.length; i++) {
                 var status = userRequests[i].status;
                 if (status === 'pending') pending++;
@@ -596,13 +217,11 @@
                 else if (status === 'completed') completed++;
                 else if (status === 'rejected') rejected++;
             }
-            
             var statPending = document.getElementById('stat-pending');
             var statProcessing = document.getElementById('stat-processing');
             var statCompleted = document.getElementById('stat-completed');
             var statRejected = document.getElementById('stat-rejected');
             var statTotal = document.getElementById('stat-total');
-            
             if (statPending) statPending.textContent = pending;
             if (statProcessing) statProcessing.textContent = processing;
             if (statCompleted) statCompleted.textContent = completed;
@@ -613,63 +232,32 @@
         function displayRequests() {
             var tbody = document.getElementById('requests-tbody');
             if (!tbody) return;
-            
             if (userRequests.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="5" class="empty-state">📭 Nenhuma solicitação encontrada</td></tr>';
                 return;
             }
-            
             var html = '';
             for (var i = 0; i < userRequests.length; i++) {
                 var req = userRequests[i];
-                var protocolText = req.protocol ? req.protocol : req.id.substring(0, 12);
-                var completedText = req.completedAt ? formatDate(req.completedAt) : '-';
-                var reasonText = req.reason ? req.reason : '-';
-                
                 html += '<tr>' +
-                    '<td><code class="protocol-code">' + escapeHtml(protocolText) + '</code></td>' +
+                    '<td><code class="protocol-code">' + escapeHtml(req.protocol) + '</code></td>' +
                     '<td>' + formatDate(req.requestDate) + '</td>' +
                     '<td>' + getStatusBadge(req.status) + '</td>' +
-                    '<td>' + escapeHtml(reasonText) + '</td>' +
-                    '<td>' + completedText + '</td>' +
+                    '<td>' + escapeHtml(req.reason || '-') + '</td>' +
+                    '<td>' + (req.completedAt ? formatDate(req.completedAt) : '-') + '</td>' +
                 '</tr>';
             }
             tbody.innerHTML = html;
         }
 
-        // ============================================
-        // SALVAR SOLICITAÇÃO
-        // ============================================
-        
-        async function saveRequestToFirestore(requestData) {
-            try {
-                var docRef = await db.collection('deletion_requests').add({
-                    userId: currentUser.uid,
-                    userEmail: currentUser.email,
-                    userName: currentUser.displayName || currentUser.email.split('@')[0],
-                    status: 'pending',
-                    requestDate: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: 'user_dashboard',
-                    protocol: requestData.protocol,
-                    reason: requestData.reason,
-                    comments: requestData.comments,
-                    requestType: 'deletion'
-                });
-                return { success: true, id: docRef.id };
-            } catch (error) {
-                console.error('Erro no Firestore:', error);
-                return { success: false, error: error.message };
-            }
-        }
-
+        // Enviar e-mail
         async function sendEmailNotification(requestData, protocol) {
             if (typeof emailjs === 'undefined') {
                 console.log('EmailJS não disponível');
                 return { success: false };
             }
-            
             var templateParams = {
-                to_email: 'wazzimagiygg@gmail.com',
+                to_email: 'dpo@wazzimagiygg.com',
                 from_name: requestData.userName,
                 from_email: currentUser.email,
                 subject: '[LGPD] Solicitação de Exclusão de Dados - ' + protocol,
@@ -681,18 +269,12 @@
                          'Email: ' + currentUser.email + '\n' +
                          'UID: ' + currentUser.uid + '\n' +
                          'Motivo: ' + (requestData.reason || 'Não informado') + '\n' +
-                         'Observações: ' + (requestData.comments || 'Nenhuma') + '\n' +
-                         'Data: ' + new Date().toLocaleString('pt-BR'),
+                         'Observações: ' + (requestData.comments || 'Nenhuma'),
                 reply_to: currentUser.email,
                 created_at: new Date().toLocaleString('pt-BR')
             };
-
             try {
-                await emailjs.send(
-                    EMAILJS_CONFIG.SERVICE_ID,
-                    EMAILJS_CONFIG.TEMPLATE_ID,
-                    templateParams
-                );
+                await emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, templateParams);
                 return { success: true };
             } catch (error) {
                 console.error('Erro no EmailJS:', error);
@@ -700,17 +282,12 @@
             }
         }
 
-        // ============================================
-        // FORMULÁRIO
-        // ============================================
-        
+        // Submeter solicitação
         async function submitDeletionRequest(event) {
             event.preventDefault();
-            
             var reasonSelect = document.getElementById('reason');
             var commentsText = document.getElementById('comments');
             var confirmCheckbox = document.getElementById('confirm-lgpd');
-            
             var reason = reasonSelect ? reasonSelect.value : '';
             var comments = commentsText ? commentsText.value.trim() : '';
             var confirmLgpd = confirmCheckbox ? confirmCheckbox.checked : false;
@@ -722,27 +299,34 @@
             
             var protocol = generateProtocol();
             var submitBtn = document.getElementById('submit-btn');
-            
             if (submitBtn) {
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = '<span class="loading-spinner"></span> Enviando solicitação...';
             }
             
-            var requestData = {
-                reason: reason || null,
-                comments: comments || null,
-                protocol: protocol,
-                userName: currentUser.displayName || currentUser.email.split('@')[0]
-            };
-            
             try {
-                var result = await saveRequestToFirestore(requestData);
+                // Criar nova solicitação
+                var newRequest = {
+                    id: Date.now().toString(),
+                    protocol: protocol,
+                    status: 'pending',
+                    reason: reason || null,
+                    comments: comments || null,
+                    requestDate: new Date().toISOString(),
+                    userName: currentUser.displayName || currentUser.email.split('@')[0],
+                    userEmail: currentUser.email
+                };
                 
-                if (!result.success) {
-                    throw new Error(result.error);
-                }
+                // Adicionar à lista local
+                userRequests.unshift(newRequest);
+                saveRequestsToLocal();
                 
-                await sendEmailNotification(requestData, protocol);
+                // Enviar e-mail
+                await sendEmailNotification({
+                    userName: newRequest.userName,
+                    reason: reason,
+                    comments: comments
+                }, protocol);
                 
                 showToast('✅ Solicitação enviada com sucesso!');
                 
@@ -750,7 +334,8 @@
                 if (commentsText) commentsText.value = '';
                 if (confirmCheckbox) confirmCheckbox.checked = false;
                 
-                await loadUserRequests();
+                updateStats();
+                displayRequests();
                 
                 var modal = document.getElementById('success-modal');
                 var protocolSpan = document.getElementById('success-protocol');
@@ -768,10 +353,7 @@
             }
         }
 
-        // ============================================
-        // RENDERIZAÇÃO DA INTERFACE
-        // ============================================
-        
+        // Renderizar Dashboard
         function renderDashboard() {
             var app = document.getElementById('app');
             var userName = currentUser.displayName || currentUser.email.split('@')[0];
@@ -780,22 +362,16 @@
             app.innerHTML = `
                 <div class="container">
                     <div class="header">
-                        <h1>
-                            <span class="material-icons">delete_forever</span>
-                            Solicitar Exclusão de Dados - LGPD
-                        </h1>
+                        <h1><span class="material-icons">delete_forever</span> Solicitar Exclusão de Dados - LGPD</h1>
                         <div class="user-info">
                             <div class="user-avatar">${escapeHtml(userInitial)}</div>
                             <div class="user-details">
                                 <div class="user-name">${escapeHtml(userName)}</div>
                                 <div class="user-email">${escapeHtml(currentUser.email)}</div>
                             </div>
-                            <button class="btn-logout" onclick="window.signOut()">
-                                <span class="material-icons" style="font-size: 16px;">logout</span> Sair
-                            </button>
+                            <button class="btn-logout" onclick="window.signOut()"><span class="material-icons" style="font-size: 16px;">logout</span> Sair</button>
                         </div>
                     </div>
-
                     <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number" id="stat-pending">0</div><div class="stat-label">Pendentes</div></div>
                         <div class="stat-card"><div class="stat-number" id="stat-processing">0</div><div class="stat-label">Processando</div></div>
@@ -803,18 +379,12 @@
                         <div class="stat-card"><div class="stat-number" id="stat-rejected">0</div><div class="stat-label">Rejeitados</div></div>
                         <div class="stat-card"><div class="stat-number" id="stat-total">0</div><div class="stat-label">Total</div></div>
                     </div>
-
                     <div class="form-card">
-                        <div class="form-title">
-                            <span class="material-icons">assignment</span>
-                            Nova Solicitação de Exclusão
-                        </div>
-
+                        <div class="form-title"><span class="material-icons">assignment</span> Nova Solicitação de Exclusão</div>
                         <div class="warning-box">
                             <span class="material-icons">warning</span>
-                            <p><strong>Atenção:</strong> A exclusão é irreversível! Todos os seus dados serão permanentemente removidos de nossos sistemas.</p>
+                            <p><strong>Atenção:</strong> A exclusão é irreversível! Todos os seus dados serão permanentemente removidos.</p>
                         </div>
-
                         <form id="deletion-form">
                             <div class="form-group">
                                 <label>Motivo da Solicitação</label>
@@ -822,73 +392,49 @@
                                     <option value="">Selecione uma opção...</option>
                                     <option value="Nao utilizo mais a plataforma">Não utilizo mais a plataforma</option>
                                     <option value="Preocupacoes com privacidade">Preocupações com privacidade</option>
-                                    <option value="Dados incorretos ou desatualizados">Dados incorretos ou desatualizados</option>
+                                    <option value="Dados incorretos">Dados incorretos ou desatualizados</option>
                                     <option value="Revogacao de consentimento">Revogação de consentimento</option>
                                     <option value="Outro motivo">Outro motivo</option>
                                 </select>
                             </div>
-
                             <div class="form-group">
                                 <label>Observações adicionais</label>
-                                <textarea id="comments" placeholder="Informe qualquer detalhe relevante sobre sua solicitação..."></textarea>
+                                <textarea id="comments" placeholder="Informe qualquer detalhe relevante..."></textarea>
                             </div>
-
                             <div class="checkbox-group">
                                 <input type="checkbox" id="confirm-lgpd">
-                                <label>
-                                    Confirmo que sou o titular dos dados e estou ciente de que a exclusão é irreversível, conforme previsto no <strong>Art. 18 da LGPD</strong>.
-                                </label>
+                                <label>Confirmo que sou o titular dos dados e estou ciente de que a exclusão é irreversível.</label>
                             </div>
-
                             <button type="submit" class="btn-submit" id="submit-btn">
-                                <span class="material-icons">delete_forever</span>
-                                Solicitar Exclusão Permanente
+                                <span class="material-icons">delete_forever</span> Solicitar Exclusão Permanente
                             </button>
                         </form>
                     </div>
-
                     <div class="requests-section">
-                        <div class="section-title">
-                            <span class="material-icons">history</span>
-                            Minhas Solicitações
-                        </div>
+                        <div class="section-title"><span class="material-icons">history</span> Minhas Solicitações</div>
                         <div class="requests-table">
                             <table>
-                                <thead>
-                                    <tr>
-                                        <th>Protocolo</th>
-                                        <th>Data da Solicitação</th>
-                                        <th>Status</th>
-                                        <th>Motivo</th>
-                                        <th>Conclusão</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="requests-tbody">
-                                    <tr><td colspan="5" class="empty-state">📋 Carregando...</td></tr>
-                                </tbody>
+                                <thead><tr><th>Protocolo</th><th>Data</th><th>Status</th><th>Motivo</th><th>Conclusão</th></tr></thead>
+                                <tbody id="requests-tbody"><tr><td colspan="5" class="empty-state">📋 Carregando...</td></tr></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
                 <div id="success-modal" class="modal">
                     <div class="modal-content">
                         <span class="material-icons success-icon">check_circle</span>
-                        <h3>Solicitação Enviada com Sucesso!</h3>
-                        <p>Sua solicitação de exclusão de dados foi recebida pela nossa equipe de compliance.</p>
+                        <h3>Solicitação Enviada!</h3>
+                        <p>Sua solicitação foi recebida. Responderemos em até 15 dias úteis.</p>
                         <div style="background:#f0f0f0; padding:10px; border-radius:8px; font-family:monospace; margin:15px 0;" id="success-protocol">WZZM-LGPD-XXXX</div>
-                        <p><strong>Prazo de resposta: 15 dias úteis</strong></p>
-                        <button class="modal-btn" onclick="window.closeModal()">OK, entendi</button>
+                        <button class="modal-btn" onclick="window.closeModal()">OK</button>
                     </div>
                 </div>
             `;
             
             var form = document.getElementById('deletion-form');
-            if (form) {
-                form.addEventListener('submit', submitDeletionRequest);
-            }
+            if (form) form.addEventListener('submit', submitDeletionRequest);
             
-            loadUserRequests();
+            loadRequestsFromLocal();
         }
 
         function renderLogin() {
@@ -897,33 +443,22 @@
                 <div class="login-container">
                     <span class="material-icons" style="font-size: 64px; color: #667eea;">delete_forever</span>
                     <h2>Solicitar Exclusão de Dados - LGPD</h2>
-                    <p>Para solicitar a exclusão dos seus dados, você precisa fazer login com sua conta Google.</p>
-                    <p style="font-size: 12px; margin-top: 10px;">Seus dados serão tratados conforme a Lei 13.709/2018 (LGPD)</p>
-                    <button class="btn-google" onclick="window.signIn()">
-                        <span class="material-icons">login</span>
-                        Entrar com Google
-                    </button>
+                    <p>Para solicitar a exclusão dos seus dados, faça login com sua conta Google.</p>
+                    <button class="btn-google" onclick="window.signIn()"><span class="material-icons">login</span> Entrar com Google</button>
                 </div>
             `;
         }
 
-        // ============================================
-        // FUNÇÕES GLOBAIS
-        // ============================================
-        
         window.signIn = function() {
             auth.signInWithPopup(googleProvider).catch(function(error) {
-                console.error('Erro no login:', error);
-                showToast('❌ Erro ao fazer login: ' + error.message, true);
+                showToast('❌ Erro: ' + error.message, true);
             });
         };
 
         window.signOut = function() {
             auth.signOut().then(function() {
-                showToast('✅ Logout realizado com sucesso');
+                showToast('✅ Logout realizado');
                 renderLogin();
-            }).catch(function(error) {
-                console.error('Erro no logout:', error);
             });
         };
 
@@ -932,17 +467,11 @@
             if (modal) modal.style.display = 'none';
         };
 
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-        
         auth.onAuthStateChanged(function(user) {
             currentUser = user;
             if (user) {
-                console.log('✅ Usuário logado:', user.email);
                 renderDashboard();
             } else {
-                console.log('❌ Nenhum usuário logado');
                 renderLogin();
             }
         });
