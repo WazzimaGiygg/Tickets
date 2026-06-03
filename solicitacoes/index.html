@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="icon" href="https://support.wazzimagiygg.com/Favicom.png" type="image/x-icon">
     
+    <!-- Firebase Scripts (OBRIGATÓRIOS) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
     <!-- EmailJS Library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     
@@ -30,7 +34,6 @@
             margin: 0 auto;
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -61,7 +64,6 @@
             margin-top: 15px;
         }
 
-        /* Formulário */
         .form-card {
             background: white;
             border-radius: 24px;
@@ -212,7 +214,6 @@
             transform: none;
         }
 
-        /* Direitos do Titular */
         .rights-section {
             margin-top: 30px;
             padding: 20px;
@@ -248,7 +249,6 @@
             color: #48bb78;
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -314,7 +314,6 @@
             margin: 15px 0;
         }
 
-        /* Loading */
         .loading {
             display: inline-block;
             width: 20px;
@@ -329,7 +328,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -440,7 +438,6 @@
                 </button>
             </form>
 
-            <!-- Seção de Direitos -->
             <div class="rights-section">
                 <h3>
                     <span class="material-icons">gavel</span>
@@ -462,7 +459,6 @@
         </div>
     </div>
 
-    <!-- Modal de Sucesso -->
     <div id="success-modal" class="modal">
         <div class="modal-content">
             <span class="material-icons success-icon">check_circle</span>
@@ -475,7 +471,6 @@
         </div>
     </div>
 
-    <!-- Modal de Erro -->
     <div id="error-modal" class="modal">
         <div class="modal-content">
             <span class="material-icons error-icon">error</span>
@@ -493,7 +488,7 @@
 
     <script>
         // ============================================
-        // CONFIGURAÇÃO DO FIREBASE E EMAILJS
+        // CONFIGURAÇÃO DO FIREBASE
         // ============================================
         
         const firebaseConfig = {
@@ -505,16 +500,20 @@
             appId: "1:249427877153:web:0e4297294794a5aadeb260"
         };
 
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        // Inicializar Firebase (se ainda não foi)
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const db = firebase.firestore();
 
-        // Configuração do EmailJS - JÁ CONFIGURADA!
+        // Configuração do EmailJS
         const EMAILJS_CONFIG = {
-            PUBLIC_KEY: 'KB_xBv3-83G8qMGlw',     // Sua Public Key
-            SERVICE_ID: 'service_wxt3tt9',       // Seu Service ID
-            TEMPLATE_ID: 'template_svo2mrf'      // Seu Template ID
+            PUBLIC_KEY: 'KB_xBv3-83G8qMGlw',
+            SERVICE_ID: 'service_wxt3tt9',
+            TEMPLATE_ID: 'template_svo2mrf'
         };
         
+        // Inicializar EmailJS
         emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
 
         // ============================================
@@ -526,8 +525,10 @@
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
             const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            return `WZZM-LGPD-${year}${month}${day}-${random}`;
+            return `WZZM-LGPD-${year}${month}${day}-${hours}${minutes}-${random}`;
         }
 
         function showToast(message, isError = false) {
@@ -544,6 +545,7 @@
                 font-size: 14px;
                 z-index: 1100;
                 animation: slideUp 0.3s ease;
+                font-weight: 500;
             `;
             toast.textContent = message;
             document.body.appendChild(toast);
@@ -552,7 +554,7 @@
 
         function closeSuccessModal() {
             document.getElementById('success-modal').style.display = 'none';
-            window.location.href = window.location.pathname; // Recarregar a página limpa
+            window.location.reload();
         }
 
         function closeErrorModal() {
@@ -560,24 +562,31 @@
         }
 
         // ============================================
-        // SALVAR NO FIRESTORE E ENVIAR EMAIL
+        // SALVAR NO FIRESTORE
         // ============================================
         
         async function saveToFirestore(requestData) {
             try {
+                console.log('📝 Salvando no Firestore:', requestData);
                 const docRef = await db.collection('deletion_requests').add({
                     ...requestData,
                     status: 'pending',
                     requestDate: firebase.firestore.FieldValue.serverTimestamp(),
-                    source: 'web_form'
+                    source: 'web_form',
+                    createdAt: new Date().toISOString()
                 });
+                console.log('✅ Documento salvo com ID:', docRef.id);
                 return { success: true, id: docRef.id };
             } catch (error) {
-                console.error('Erro no Firestore:', error);
+                console.error('❌ Erro no Firestore:', error);
                 return { success: false, error: error.message };
             }
         }
 
+        // ============================================
+        // ENVIAR E-MAIL
+        // ============================================
+        
         async function sendEmailNotification(requestData, protocol) {
             const templateParams = {
                 to_email: 'dpo@wazzimagiygg.com',
@@ -602,15 +611,16 @@
             };
 
             try {
+                console.log('📧 Enviando e-mail para dpo@wazzimagiygg.com...');
                 const response = await emailjs.send(
                     EMAILJS_CONFIG.SERVICE_ID,
                     EMAILJS_CONFIG.TEMPLATE_ID,
                     templateParams
                 );
-                console.log('Email enviado:', response);
+                console.log('✅ E-mail enviado com sucesso!', response);
                 return { success: true };
             } catch (error) {
-                console.error('Erro no EmailJS:', error);
+                console.error('❌ Erro no EmailJS:', error);
                 return { success: false, error };
             }
         }
@@ -624,6 +634,8 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            console.log('🚀 Iniciando envio do formulário...');
             
             // Coletar dados
             const userName = document.getElementById('full-name').value.trim();
@@ -668,6 +680,7 @@
             
             // Gerar protocolo
             const protocol = generateProtocol();
+            console.log('📋 Protocolo gerado:', protocol);
             
             // Preparar dados
             const requestData = {
@@ -678,7 +691,8 @@
                 comments: comments || null,
                 status: 'pending',
                 protocol,
-                requestType: 'deletion'
+                requestType: 'deletion',
+                userIp: await getClientIP()
             };
             
             // Desabilitar botão
@@ -686,30 +700,38 @@
             submitBtn.innerHTML = '<span class="loading"></span> Enviando solicitação...';
             
             try {
-                // Salvar no Firestore
+                // 1. Salvar no Firestore
+                console.log('💾 Salvando no Firestore...');
                 const firestoreResult = await saveToFirestore(requestData);
                 
                 if (!firestoreResult.success) {
                     throw new Error(firestoreResult.error);
                 }
                 
-                // Enviar email para o DPO
-                await sendEmailNotification(requestData, protocol);
+                // 2. Enviar email para o DPO
+                console.log('📧 Enviando e-mail...');
+                const emailResult = await sendEmailNotification(requestData, protocol);
                 
-                // Mostrar modal de sucesso com protocolo
+                if (!emailResult.success) {
+                    console.warn('⚠️ E-mail não enviado, mas solicitação foi salva');
+                    showToast('⚠️ Solicitação salva, mas houve problema no e-mail. Nossa equipe foi notificada.', true);
+                }
+                
+                // 3. Mostrar modal de sucesso
                 document.getElementById('protocol-code').textContent = protocol;
                 document.getElementById('success-modal').style.display = 'flex';
                 
-                // Limpar formulário
+                // 4. Limpar formulário
                 form.reset();
                 
+                console.log('✅ Processo concluído com sucesso!');
                 showToast('✅ Solicitação enviada com sucesso!');
                 
             } catch (error) {
-                console.error('Erro:', error);
+                console.error('❌ Erro no processo:', error);
                 document.getElementById('error-message').innerHTML = 
                     `Ocorreu um erro ao enviar sua solicitação: ${error.message}<br><br>
-                    Por favor, tente novamente ou entre em contato com o suporte.`;
+                    Por favor, tente novamente ou entre em contato com o suporte pelo e-mail dpo@wazzimagiygg.com`;
                 document.getElementById('error-modal').style.display = 'flex';
                 showToast('❌ Erro ao enviar solicitação', true);
             } finally {
@@ -717,6 +739,17 @@
                 submitBtn.innerHTML = '<span class="material-icons">send</span> Solicitar Exclusão de Dados';
             }
         });
+        
+        // Função para obter IP do cliente (opcional)
+        async function getClientIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'Não disponível';
+            }
+        }
 
         // Fechar modais ao clicar fora
         window.onclick = function(event) {
@@ -725,6 +758,10 @@
             if (event.target === successModal) closeSuccessModal();
             if (event.target === errorModal) closeErrorModal();
         }
+        
+        // Verificar se o Firebase está funcionando
+        console.log('🔥 Firebase inicializado:', firebase.apps.length > 0);
+        console.log('📧 EmailJS inicializado');
     </script>
 </body>
 </html>
