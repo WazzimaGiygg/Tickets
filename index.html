@@ -264,6 +264,66 @@
             padding: 60px;
             color: #a0aec0;
         }
+
+        /* Footer Styles */
+        .footer {
+            background: #1a5f7a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8em;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-ticket {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.15);
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .footer-ticket:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.02);
+        }
+
+        .footer-divider {
+            margin: 0 10px;
+            opacity: 0.5;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 900px) {
+            .footer {
+                font-size: 0.7em;
+            }
+            .footer-divider {
+                display: none;
+            }
+            .footer-links {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -637,24 +697,24 @@
         function renderApp() {
             const app = document.getElementById('app');
             app.innerHTML = `
-<div class="header">
-    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-        <img src="https://support.wazzimagiygg.com/Favicom.png" 
-             alt="Logo Help Desk WazzimaGiygg" 
-             style="height: 60px; width: auto; border-radius: 12px;">
-        <div>
-            <h1>
-                <span class="material-icons">support_agent</span>
-                Help Desk wazzimagiygg
-            </h1>
-            <p>Sistema de suporte - Abra um ticket e acompanhe suas solicitações</p>
-        </div>
-    </div>
-    <div style="margin-top: 15px;">
-        <span id="user-email"></span>
-        <button id="logout-btn" class="btn-primary" style="margin-left: 10px; padding: 8px 16px;">Sair</button>
-    </div>
-</div>
+                <div class="header">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                        <img src="https://support.wazzimagiygg.com/Favicom.png" 
+                             alt="Logo Help Desk WazzimaGiygg" 
+                             style="height: 60px; width: auto; border-radius: 12px;">
+                        <div>
+                            <h1>
+                                <span class="material-icons">support_agent</span>
+                                Help Desk wazzimagiygg
+                            </h1>
+                            <p>Sistema de suporte - Abra um ticket e acompanhe suas solicitações</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <span id="user-email"></span>
+                        <button id="logout-btn" class="btn-primary" style="margin-left: 10px; padding: 8px 16px;">Sair</button>
+                    </div>
+                </div>
 
                 <div class="stats-grid">
                     <div class="stat-card"><h3 id="stat-open">0</h3><p>Em Aberto</p></div>
@@ -793,11 +853,33 @@
         window.sendReply = sendReply;
         window.closeModal = closeModal;
     </script>
-<iframe 
-    src="https://wazzimagiygg.com/admin/checkuser/universalcheckuser" 
-    style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
-    title="Registrador de Logs">
-</iframe>
+
+    <!-- RODAPÉ INSERIDO DO CÓDIGO ORIGINAL -->
+    <div class="footer">
+        <div class="footer-links">
+            <span>Όχι, ο Χρόνος não é ο άρχοντας da γνώσης! - WazzimaGiygg</span>
+            <span class="footer-divider">|</span>
+            <a href="https://wazzimagiygg.com/desktop.html" target="_blank">🖥️ Acessar Desktop</a>
+            <span class="footer-divider">|</span>
+            <a href="https://wazzimagiygg.com/LGPD" style="color:white;">LGPD</a>
+            <span class="footer-divider">|</span>
+            <a href="https://wazzimagiygg.com/Marco Civil" style="color:white;">Marco Civil</a>
+            <span class="footer-divider">|</span>
+            <a href="https://wazzimagiygg.com/relatorio-wikipedia.html" target="_blank" style="color:#ffb347;">📄 Relatório Wikipédia</a>
+            <span class="footer-divider">|</span>
+            <a href="https://support.wazzimagiygg.com/" target="_blank" class="footer-ticket">
+                🎫 Contato por Ticket
+            </a>
+            <span class="footer-divider">|</span>
+            <a href="https://wazzimagiygg.com/produtos" target="_blank" style="color:#ffb347;">🛍️ Produtos WazzimaGiygg</a>
+        </div>
+    </div>
+
+    <iframe 
+        src="https://wazzimagiygg.com/admin/checkuser/universalcheckuser" 
+        style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
+        title="Registrador de Logs">
+    </iframe>
     
 </body>
 </html>
