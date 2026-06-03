@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Exclusão de Dados - LGPD | WazzimaGiygg</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" href="https://support.wazzimagiygg.com/Favicom.png" type="image/x-icon">
+    
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 2.5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .header p {
+            color: rgba(255,255,255,0.9);
+            margin-top: 15px;
+            font-size: 1.1em;
+        }
+
+        .badge-lgpd {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        /* Formulário */
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-title {
+            font-size: 1.5em;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #2d3748;
+        }
+
+        .form-group label .required {
+            color: #e53e3e;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .info-box .material-icons {
+            float: left;
+            margin-right: 12px;
+            color: #3182ce;
+        }
+
+        .info-box p {
+            color: #2c5282;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .warning-box .material-icons {
+            float: left;
+            margin-right: 12px;
+            color: #e53e3e;
+        }
+
+        .warning-box p {
+            color: #c53030;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: normal;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Direitos do Titular */
+        .rights-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 16px;
+        }
+
+        .rights-section h3 {
+            font-size: 1.1em;
+            color: #2d3748;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rights-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .right-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #4a5568;
+        }
+
+        .right-item .material-icons {
+            font-size: 16px;
+            color: #48bb78;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .modal-content .material-icons {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .success-icon {
+            color: #48bb78;
+        }
+
+        .modal-content .error-icon {
+            color: #e53e3e;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .modal-content p {
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .protocol-code {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin: 15px 0;
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .form-card {
+                padding: 25px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <span class="material-icons">delete_forever</span>
+                Solicitar Exclusão de Dados
+            </h1>
+            <p>Nos termos da LGPD (Lei 13.709/2018) - Direito ao Esquecimento e Portabilidade</p>
+            <div class="badge-lgpd">
+                <span class="material-icons" style="font-size: 14px;">verified</span>
+                Seus dados, seu controle
+            </div>
+        </div>
+
+        <div class="form-card">
+            <div class="form-title">
+                <span class="material-icons">assignment</span>
+                Formulário de Solicitação LGPD
+            </div>
+            <div class="form-subtitle">
+                Preencha os dados abaixo para solicitar a exclusão permanente de suas informações.
+            </div>
+
+            <div class="info-box">
+                <span class="material-icons">info</span>
+                <p><strong>Prazo de resposta:</strong> Até 15 dias úteis, conforme estabelecido pela LGPD. Você receberá uma confirmação por e-mail quando seu pedido for processado.</p>
+            </div>
+
+            <div class="warning-box">
+                <span class="material-icons">warning</span>
+                <p><strong>Atenção:</strong> A exclusão é irreversível! Todos os seus dados serão permanentemente removidos de nossos sistemas, incluindo histórico, publicações, e informações de conta.</p>
+            </div>
+
+            <form id="deletion-request-form">
+                <div class="form-group">
+                    <label>Nome Completo <span class="required">*</span></label>
+                    <input type="text" id="full-name" placeholder="Como você se identifica em nossa plataforma" required>
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail (usado na plataforma) <span class="required">*</span></label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                    <small style="color: #718096; font-size: 12px;">Enviaremos a confirmação para este e-mail</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirme seu E-mail <span class="required">*</span></label>
+                    <input type="email" id="confirm-email" placeholder="confirme seu e-mail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>UID do Usuário (opcional, mas ajuda na localização)</label>
+                    <input type="text" id="user-id" placeholder="Se você tem acesso ao seu UID, informe aqui">
+                    <small style="color: #718096; font-size: 12px;">Você pode encontrar seu UID no perfil da sua conta</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Motivo da Solicitação (opcional)</label>
+                    <select id="reason">
+                        <option value="">Selecione uma opção...</option>
+                        <option value="desuso">Não utilizo mais a plataforma</option>
+                        <option value="privacidade">Preocupações com privacidade</option>
+                        <option value="dados_incorretos">Dados incorretos ou desatualizados</option>
+                        <option value="consentimento">Revogação de consentimento</option>
+                        <option value="outro">Outro motivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Observações adicionais (opcional)</label>
+                    <textarea id="comments" placeholder="Informe qualquer detalhe relevante sobre sua solicitação..."></textarea>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="confirm-lgpd" required>
+                    <label>
+                        Confirmo que sou o titular dos dados e estou ciente de que a exclusão é irreversível, conforme previsto no Art. 18 da LGPD.
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="confirm-understand" required>
+                    <label>
+                        Compreendo que após a exclusão, não poderei recuperar meus dados, publicações ou histórico na plataforma.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    <span class="material-icons">send</span>
+                    Solicitar Exclusão de Dados
+                </button>
+            </form>
+
+            <!-- Seção de Direitos -->
+            <div class="rights-section">
+                <h3>
+                    <span class="material-icons">gavel</span>
+                    Seus direitos garantidos pela LGPD:
+                </h3>
+                <div class="rights-list">
+                    <div class="right-item"><span class="material-icons">check_circle</span> Confirmação da existência de tratamento</div>
+                    <div class="right-item"><span class="material-icons">check_circle</span> Acesso aos dados pessoais</div>
+                    <div class="right-item"><span class="material-icons">check_circle</span> Correção de dados incompletos</div>
+                    <div class="right-item"><span class="material-icons">check_circle</span> Portabilidade dos dados</div>
+                    <div class="right-item"><span class="material-icons">check_circle</span> Eliminação de dados desnecessários</div>
+                    <div class="right-item"><span class="material-icons">check_circle</span> Revogação do consentimento</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Em caso de dúvidas, entre em contato com nosso Encarregado (DPO): dpo@wazzimagiygg.com</p>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso -->
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="material-icons success-icon">check_circle</span>
+            <h3>Solicitação Enviada com Sucesso!</h3>
+            <p>Sua solicitação de exclusão de dados foi recebida pela nossa equipe de compliance.</p>
+            <div class="protocol-code" id="protocol-code">WZZM-LGPD-XXXX</div>
+            <p>Protocolo salvo acima. Guarde este número para referência.</p>
+            <p><strong>Prazo de resposta: 15 dias úteis</strong></p>
+            <button class="modal-btn" onclick="closeSuccessModal()">OK, entendi</button>
+        </div>
+    </div>
+
+    <!-- Modal de Erro -->
+    <div id="error-modal" class="modal">
+        <div class="modal-content">
+            <span class="material-icons error-icon">error</span>
+            <h3>Erro ao Enviar</h3>
+            <p id="error-message">Ocorreu um erro. Tente novamente ou entre em contato com o suporte.</p>
+            <button class="modal-btn" onclick="closeErrorModal()">Tentar Novamente</button>
+        </div>
+    </div>
+
+    <iframe 
+        src="https://wazzimagiygg.com/admin/checkuser/universalcheckuser" 
+        style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
+        title="Registrador de Logs">
+    </iframe>
+
+    <script>
+        // ============================================
+        // CONFIGURAÇÃO DO FIREBASE E EMAILJS
+        // ============================================
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
+            authDomain: "wzzm-ce3fc.firebaseapp.com",
+            projectId: "wzzm-ce3fc",
+            storageBucket: "wzzm-ce3fc.appspot.com",
+            messagingSenderId: "249427877153",
+            appId: "1:249427877153:web:0e4297294794a5aadeb260"
+        };
+
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Configuração do EmailJS - JÁ CONFIGURADA!
+        const EMAILJS_CONFIG = {
+            PUBLIC_KEY: 'KB_xBv3-83G8qMGlw',     // Sua Public Key
+            SERVICE_ID: 'service_wxt3tt9',       // Seu Service ID
+            TEMPLATE_ID: 'template_svo2mrf'      // Seu Template ID
+        };
+        
+        emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        
+        function generateProtocol() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `WZZM-LGPD-${year}${month}${day}-${random}`;
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${isError ? '#e53e3e' : '#48bb78'};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 50px;
+                font-size: 14px;
+                z-index: 1100;
+                animation: slideUp 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').style.display = 'none';
+            window.location.href = window.location.pathname; // Recarregar a página limpa
+        }
+
+        function closeErrorModal() {
+            document.getElementById('error-modal').style.display = 'none';
+        }
+
+        // ============================================
+        // SALVAR NO FIRESTORE E ENVIAR EMAIL
+        // ============================================
+        
+        async function saveToFirestore(requestData) {
+            try {
+                const docRef = await db.collection('deletion_requests').add({
+                    ...requestData,
+                    status: 'pending',
+                    requestDate: firebase.firestore.FieldValue.serverTimestamp(),
+                    source: 'web_form'
+                });
+                return { success: true, id: docRef.id };
+            } catch (error) {
+                console.error('Erro no Firestore:', error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        async function sendEmailNotification(requestData, protocol) {
+            const templateParams = {
+                to_email: 'dpo@wazzimagiygg.com',
+                from_name: requestData.userName,
+                from_email: requestData.userEmail,
+                subject: `[LGPD] Nova Solicitação de Exclusão de Dados - ${protocol}`,
+                protocol: protocol,
+                request_type: 'Exclusão de Dados (LGPD Art. 18)',
+                law: 'LGPD - Lei Geral de Proteção de Dados',
+                message: `
+                    <strong>Protocolo:</strong> ${protocol}<br>
+                    <strong>Nome:</strong> ${requestData.userName}<br>
+                    <strong>Email:</strong> ${requestData.userEmail}<br>
+                    <strong>UID:</strong> ${requestData.userId || 'Não informado'}<br>
+                    <strong>Motivo:</strong> ${requestData.reason || 'Não informado'}<br>
+                    <strong>Observações:</strong> ${requestData.comments || 'Nenhuma'}<br>
+                    <hr>
+                    <strong>Data da solicitação:</strong> ${new Date().toLocaleString('pt-BR')}
+                `,
+                reply_to: requestData.userEmail,
+                created_at: new Date().toLocaleString('pt-BR')
+            };
+
+            try {
+                const response = await emailjs.send(
+                    EMAILJS_CONFIG.SERVICE_ID,
+                    EMAILJS_CONFIG.TEMPLATE_ID,
+                    templateParams
+                );
+                console.log('Email enviado:', response);
+                return { success: true };
+            } catch (error) {
+                console.error('Erro no EmailJS:', error);
+                return { success: false, error };
+            }
+        }
+
+        // ============================================
+        // SUBMISSÃO DO FORMULÁRIO
+        // ============================================
+        
+        const form = document.getElementById('deletion-request-form');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Coletar dados
+            const userName = document.getElementById('full-name').value.trim();
+            const userEmail = document.getElementById('email').value.trim();
+            const confirmEmail = document.getElementById('confirm-email').value.trim();
+            const userId = document.getElementById('user-id').value.trim();
+            const reason = document.getElementById('reason').value;
+            const comments = document.getElementById('comments').value.trim();
+            const confirmLgpd = document.getElementById('confirm-lgpd').checked;
+            const confirmUnderstand = document.getElementById('confirm-understand').checked;
+            
+            // Validações
+            if (!userName) {
+                showToast('❌ Por favor, informe seu nome completo', true);
+                return;
+            }
+            
+            if (!userEmail || !confirmEmail) {
+                showToast('❌ Por favor, informe seu e-mail', true);
+                return;
+            }
+            
+            if (userEmail !== confirmEmail) {
+                showToast('❌ Os e-mails informados não coincidem', true);
+                return;
+            }
+            
+            if (!userEmail.includes('@') || !userEmail.includes('.')) {
+                showToast('❌ Por favor, informe um e-mail válido', true);
+                return;
+            }
+            
+            if (!confirmLgpd) {
+                showToast('❌ Você precisa confirmar que é o titular dos dados', true);
+                return;
+            }
+            
+            if (!confirmUnderstand) {
+                showToast('❌ Você precisa confirmar que entende a irreversibilidade da exclusão', true);
+                return;
+            }
+            
+            // Gerar protocolo
+            const protocol = generateProtocol();
+            
+            // Preparar dados
+            const requestData = {
+                userName,
+                userEmail,
+                userId: userId || null,
+                reason: reason || null,
+                comments: comments || null,
+                status: 'pending',
+                protocol,
+                requestType: 'deletion'
+            };
+            
+            // Desabilitar botão
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading"></span> Enviando solicitação...';
+            
+            try {
+                // Salvar no Firestore
+                const firestoreResult = await saveToFirestore(requestData);
+                
+                if (!firestoreResult.success) {
+                    throw new Error(firestoreResult.error);
+                }
+                
+                // Enviar email para o DPO
+                await sendEmailNotification(requestData, protocol);
+                
+                // Mostrar modal de sucesso com protocolo
+                document.getElementById('protocol-code').textContent = protocol;
+                document.getElementById('success-modal').style.display = 'flex';
+                
+                // Limpar formulário
+                form.reset();
+                
+                showToast('✅ Solicitação enviada com sucesso!');
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('error-message').innerHTML = 
+                    `Ocorreu um erro ao enviar sua solicitação: ${error.message}<br><br>
+                    Por favor, tente novamente ou entre em contato com o suporte.`;
+                document.getElementById('error-modal').style.display = 'flex';
+                showToast('❌ Erro ao enviar solicitação', true);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="material-icons">send</span> Solicitar Exclusão de Dados';
+            }
+        });
+
+        // Fechar modais ao clicar fora
+        window.onclick = function(event) {
+            const successModal = document.getElementById('success-modal');
+            const errorModal = document.getElementById('error-modal');
+            if (event.target === successModal) closeSuccessModal();
+            if (event.target === errorModal) closeErrorModal();
+        }
+    </script>
+</body>
+</html>
