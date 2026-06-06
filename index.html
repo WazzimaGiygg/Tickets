@@ -265,8 +265,8 @@
             color: #a0aec0;
         }
 
-        /* Footer Styles */
-        .footer {
+        /* Estilos gerais para o rodapé que será carregado dinamicamente */
+        #rodape-container .footer {
             background: #1a5f7a;
             color: white;
             text-align: center;
@@ -275,16 +275,16 @@
             margin-top: 30px;
         }
 
-        .footer a {
+        #rodape-container .footer a {
             color: white;
             text-decoration: none;
         }
 
-        .footer a:hover {
+        #rodape-container .footer a:hover {
             text-decoration: underline;
         }
 
-        .footer-ticket {
+        #rodape-container .footer-ticket {
             display: inline-flex;
             align-items: center;
             gap: 5px;
@@ -294,17 +294,17 @@
             transition: all 0.2s;
         }
 
-        .footer-ticket:hover {
+        #rodape-container .footer-ticket:hover {
             background: rgba(255,255,255,0.25);
             transform: scale(1.02);
         }
 
-        .footer-divider {
+        #rodape-container .footer-divider {
             margin: 0 10px;
             opacity: 0.5;
         }
 
-        .footer-links {
+        #rodape-container .footer-links {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -313,13 +313,13 @@
         }
 
         @media (max-width: 900px) {
-            .footer {
+            #rodape-container .footer {
                 font-size: 0.7em;
             }
-            .footer-divider {
+            #rodape-container .footer-divider {
                 display: none;
             }
-            .footer-links {
+            #rodape-container .footer-links {
                 flex-direction: column;
                 gap: 8px;
             }
@@ -331,11 +331,66 @@
         <!-- Conteúdo será renderizado aqui -->
     </div>
 
+    <!-- Container onde o rodapé será carregado dinamicamente -->
+    <div id="rodape-container"></div>
+
+    <!-- Iframe do verificador/logs (mantido como você tinha) -->
+    <iframe 
+        src="https://wazzimagiygg.com/admin/checkuser/universalcheckuser" 
+        style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
+        title="Registrador de Logs">
+    </iframe>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
+        // ============================================
+        // CARREGAMENTO DO RODAPÉ (via JavaScript)
+        // ============================================
+        (function carregarRodape() {
+            const rodapeContainer = document.getElementById('rodape-container');
+            if (!rodapeContainer) return;
+            
+            // Mostrar um estado de carregamento opcional
+            rodapeContainer.innerHTML = '<div style="text-align:center; padding:20px;">Carregando rodapé...</div>';
+            
+            fetch('http://gspotfverwazzimagiygg.wazzimagiygg.com/footer.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    rodapeContainer.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar rodapé:', error);
+                    // Fallback caso o arquivo não esteja disponível
+                    rodapeContainer.innerHTML = `
+                        <div class="footer" style="background:#1a5f7a; color:white; text-align:center; padding:20px; margin-top:30px;">
+                            <div class="footer-links">
+                                <a href="https://wazzimagiygg.com/donate/" style="color:white;">💝 Faça sua doação!</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://wazzimagiygg.com/desktop.html" target="_blank">🖥️ Acessar Desktop</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://wazzimagiygg.com/LGPD" style="color:white;">🔒 LGPD</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://wazzimagiygg.com/MarcoCivil" style="color:white;">📜 Marco Civil</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://wazzimagiygg.com/relatorio-wikipedia.html" target="_blank" style="color:#ffb347;">📄 Relatório Wikipédia</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://support.wazzimagiygg.com/" target="_blank" class="footer-ticket">🎫 Contato por Ticket</a>
+                                <span class="footer-divider">|</span>
+                                <a href="https://wazzimagiygg.com/produtos" target="_blank" style="color:#ffb347;">🛍️ Produtos WazzimaGiygg</a>
+                            </div>
+                        </div>
+                    `;
+                });
+        })();
+
         // Configuração Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB9GkSqTIZ0kbVsba_WOdQeVAETrF9qna0",
@@ -853,33 +908,5 @@
         window.sendReply = sendReply;
         window.closeModal = closeModal;
     </script>
-
-    <!-- RODAPÉ INSERIDO DO CÓDIGO ORIGINAL -->
-    <div class="footer">
-        <div class="footer-links">
-            <a href="https://support.wazzimagiygg.com/solicitacoes/" target="_blank">🖥️ Solicitação de Remoção de dados</a>
-            <span class="footer-divider">|</span>
-            <a href="https://wazzimagiygg.com/desktop.html" target="_blank">🖥️ Acessar Desktop</a>
-            <span class="footer-divider">|</span>
-            <a href="https://wazzimagiygg.com/LGPD" style="color:white;">LGPD</a>
-            <span class="footer-divider">|</span>
-            <a href="https://wazzimagiygg.com/Marco Civil" style="color:white;">Marco Civil</a>
-            <span class="footer-divider">|</span>
-            <a href="https://wazzimagiygg.com/relatorio-wikipedia.html" target="_blank" style="color:#ffb347;">📄 Relatório Wikipédia</a>
-            <span class="footer-divider">|</span>
-            <a href="https://support.wazzimagiygg.com/" target="_blank" class="footer-ticket">
-                🎫 Contato por Ticket
-            </a>
-            <span class="footer-divider">|</span>
-            <a href="https://wazzimagiygg.com/produtos" target="_blank" style="color:#ffb347;">🛍️ Produtos WazzimaGiygg</a>
-        </div>
-    </div>
-
-    <iframe 
-        src="https://wazzimagiygg.com/admin/checkuser/universalcheckuser" 
-        style="width: 300px; height: 150px; border: none; position: fixed; bottom: 10px; right: 10px; z-index: 9999;"
-        title="Registrador de Logs">
-    </iframe>
-    
 </body>
 </html>
