@@ -415,6 +415,41 @@
         let currentTicketId = null;
 
         // ============================================
+        // FUNÇÃO PARA REGISTRAR USUÁRIO
+        // ============================================
+        async function registerUser(user) {
+            try {
+                const uid = user.uid;
+                const userData = {
+                    uid: uid,
+                    email: user.email || '',
+                    name: user.displayName || 'Usuário',
+                    profilePictureUrl: user.photoURL || '',
+                    isAdmin: false,
+                    isBan: false,
+                    isBanned: false,
+                    isTeacher: false,
+                    isTeatcher: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                // Registra na coleção 'users'
+                await db.collection('users').doc(uid).set(userData, { merge: true });
+                
+                // Registra na coleção 'usuários'
+                await db.collection('usuários').doc(uid).set(userData, { merge: true });
+
+                console.log(`Usuário ${uid} registrado com sucesso!`);
+                return true;
+            } catch (error) {
+                console.error('Erro ao registrar usuário:', error);
+                return false;
+            }
+        }
+
+        // ============================================
         // FUNÇÕES PRINCIPAIS
         // ============================================
 
@@ -741,7 +776,8 @@
         // Login/Logout
         async function signIn() {
             try {
-                await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+                const result = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+                await registerUser(result.user);
             } catch (error) {
                 alert('Erro no login: ' + error.message);
             }
@@ -900,6 +936,9 @@
         auth.onAuthStateChanged(async (user) => {
             currentUser = user;
             if (user) {
+                // Registra o usuário no Firestore
+                await registerUser(user);
+                
                 renderApp();
                 await loadTickets();
                 await updateStats();
@@ -915,6 +954,6 @@
         window.closeModal = closeModal;
     </script>
             <!-- Iframe do verificador/logs (mantido como você tinha) -->
-<script src="https://gspotfverwazzimagiygg.wazzimagiygg.com/D6FefD0De/EfdFeF1ExcE0C/De0Var6H6f/QXdv0/dddcefb.js"></script>s
+<script src="https://gspotfverwazzimagiygg.wazzimagiygg.com/D6FefD0De/EfdFeF1ExcE0C/De0Var6H6f/QXdv0/dddcefb.js"></script>
 </body>
 </html>
