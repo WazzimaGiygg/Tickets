@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://support.wazzimagiygg.com/sitemap.xml
+
+# Tickets são dados sensíveis, não indexar
+Disallow: /ticket/
+Disallow: /login/
+Disallow: /admin/
